@@ -1,2 +1,2 @@
-# PICKSARI
-yapp karaoke project
+# YAPP-DEV 6조
+PICKSARI
