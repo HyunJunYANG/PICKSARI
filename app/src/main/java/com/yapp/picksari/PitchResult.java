@@ -60,7 +60,7 @@ public class PitchResult extends AppCompatActivity {
                     public void run() {
                         if(SPresult != null)
                             JSONParser(SPresult);
-                            System.out.println(items.get(0).getmSinger());
+//                            System.out.println(items.get(0).getmSinger());
                     }
                 });
             }

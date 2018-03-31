@@ -19,21 +19,8 @@
             android:src="@drawable/loading_bar"/>
     </RelativeLayout>
 
-<<<<<<< Updated upstream
-    <Button
-        android:id="@+id/btn_tomain"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="onClick"
-        android:text="Button" />
-
-    <ImageView
-        android:id="@+id/man_picture"
-        android:layout_width="match_parent"
-=======
     <RelativeLayout
         android:layout_width="wrap_content"
->>>>>>> Stashed changes
         android:layout_height="0dp"
         android:layout_weight="7">
 

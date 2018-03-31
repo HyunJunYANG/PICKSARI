@@ -88,7 +88,7 @@ public class PitchDetect extends AppCompatActivity {
                                 handler.postDelayed(new Runnable() {
                                     @Override
                                     public void run() {
-                                        Intent intent = new Intent(PitchDetect.this, PitchResult.class);
+                                        Intent intent = new Intent(PitchDetect.this, MainActivity.class); // 수정
                                         intent.putExtra("scaleInfo", pitchText.getText().toString());
                                         startActivity(intent);
                                         System.exit(0);
