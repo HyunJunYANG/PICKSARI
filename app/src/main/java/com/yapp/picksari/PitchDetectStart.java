@@ -30,7 +30,7 @@ public class PitchDetectStart extends AppCompatActivity {
                         break;
                     case MotionEvent.ACTION_UP:
                         startImage.setImageResource(R.drawable.start_white);
-                        Intent intent = new Intent(PitchDetectStart.this, PitchDetect.class);
+                        Intent intent = new Intent(PitchDetectStart.this, PitchDetectStart2.class);
                         startActivity(intent);
                         finish();
                         break;
