@@ -18,6 +18,9 @@ public class PitchDetectStart extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pitch_detect_start);
 
+        //안꺼지게
+        getWindow().addFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
         startImage = findViewById(R.id.StartImage);
 
         //터치리스너, 누르면 색이 변하고 떼면 넘어감

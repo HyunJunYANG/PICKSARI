@@ -19,6 +19,7 @@
             android:src="@drawable/loading_bar"/>
     </RelativeLayout>
 
+<<<<<<< Updated upstream
     <Button
         android:id="@+id/btn_tomain"
         android:layout_width="match_parent"
@@ -29,10 +30,42 @@
     <ImageView
         android:id="@+id/man_picture"
         android:layout_width="match_parent"
+=======
+    <RelativeLayout
+        android:layout_width="wrap_content"
+>>>>>>> Stashed changes
         android:layout_height="0dp"
-        android:layout_weight="7"
-        android:scaleType="fitXY"
-        android:src="@drawable/man_2"/>
+        android:layout_weight="7">
+
+        <ImageView
+            android:id="@+id/man_picture"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:src="@drawable/man_2"/>
+
+        <ImageView
+            android:id="@+id/round"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/round_back"
+            android:layout_alignBottom="@+id/man_picture"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="52dp"/>
+        <TextView
+            android:id="@+id/pitchtext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="50sp"
+            android:textColor="#ffe000"
+            android:text="ㅋㅋㅋ"
+            android:layout_alignBottom="@+id/round"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="10dp"/>
+
+
+    </RelativeLayout>
+
 
     <ImageView
         android:layout_width="match_parent"

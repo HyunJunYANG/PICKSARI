@@ -32,6 +32,10 @@ public class PitchDetectStart2 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pitch_detect_start2);
 
+        //안꺼지게
+        getWindow().addFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
+        //권한 설정
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO)!= PackageManager.PERMISSION_GRANTED) {
             if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.RECORD_AUDIO)) {
 
@@ -44,9 +48,10 @@ public class PitchDetectStart2 extends AppCompatActivity {
         }
 
         handler = new Handler();
-        handler.postDelayed(runnable, 4000); //4초 지연
+        handler.postDelayed(runnable, 2000); //2초 지연
     }
 
+    //첫 권한 설정에서 아니요를 누른 경우
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            String permissions[], int[] grantResults) {
