@@ -4,15 +4,99 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#ffffffff"
+    app:layout_constraintLeft_toRightOf="parent"
+    app:layout_constraintRight_toLeftOf="parent"
     tools:context="com.yapp.picksari.MainActivity">
 
-    <TextView
+
+    <ImageView
+        android:id="@+id/logo_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_marginLeft="151dp"
+        android:layout_marginRight="151dp"
+        android:layout_marginTop="40dp"
+        app:layout_constraintLeft_toRightOf="parent"
+        app:layout_constraintRight_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="parent"
+        app:srcCompat="@drawable/ic_logo_mini" />
+
+
+
+    <ImageView
+        android:id="@+id/iv_empty"
+        android:layout_width="320dp"
+        android:layout_height="27dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/my_search"
+        android:visibility="visible"
+        app:layout_constraintLeft_toRightOf="parent"
+        app:layout_constraintRight_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/logo_image" />
+
+    <ImageView
+        android:id="@+id/iv_search"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_marginLeft="311dp"
+        android:layout_marginRight="31dp"
+        android:layout_marginTop="28dp"
+        app:layout_constraintLeft_toRightOf="parent"
+        app:layout_constraintRight_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/logo_image"
+        app:srcCompat="@drawable/ic_search_icon" />
+
+    <EditText
+        android:id="@+id/et_search"
+        android:layout_width="270dp"
+        android:layout_height="27dp"
+        android:layout_marginLeft="3dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="27dp"
+        android:background="@null"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:visibility="visible"
+        app:layout_constraintLeft_toRightOf="parent"
+        app:layout_constraintRight_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/logo_image" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="0px"
+        android:layout_weight="1"
+        android:background="@android:color/white"
+        app:layout_constraintTop_toBottomOf="@id/iv_empty"
+        android:layout_marginTop="13dp"/>
+
+    <FrameLayout
+        android:id="@+id/my_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.astuetz.PagerSlidingTabStrip
+            android:id="@+id/tabs"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_marginTop="197dp"
+            android:background="#FFFFFF"
+            android:elevation="4dp"
+            app:pstsIndicatorColor="@android:color/white"
+            app:pstsShouldExpand="true" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:srcCompat="@drawable/ic_wave_top_background" />
+    </FrameLayout>
+
 
 </android.support.constraint.ConstraintLayout>

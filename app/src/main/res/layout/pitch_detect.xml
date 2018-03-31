@@ -19,6 +19,13 @@
             android:src="@drawable/box"/>
     </LinearLayout>
 
+    <Button
+        android:id="@+id/btn_tomain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onClick"
+        android:text="Button" />
+
     <ImageView
         android:id="@+id/man_1"
         android:layout_width="match_parent"

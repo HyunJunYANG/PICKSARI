@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">PICKSARI</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="main_home">Home</string>
+    <string name="main_mypick">My Pick</string>
 </resources>
