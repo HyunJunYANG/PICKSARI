@@ -5,32 +5,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.yapp.picksari.PitchDetect">
+    tools:context="com.yapp.picksari.PitchDetectStart2">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="2"
+        android:layout_weight="1.7"
         android:orientation="vertical">
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:src="@drawable/loading_bar"/>
-    </RelativeLayout>
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="7dp"
+            android:src="@drawable/box"/>
+    </LinearLayout>
 
     <ImageView
-        android:id="@+id/man_picture"
+        android:id="@+id/man_1"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="7"
+        android:layout_weight="8.3"
         android:scaleType="fitXY"
-        android:src="@drawable/man_2"/>
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:src="@drawable/piano"
-        android:scaleType="fitXY"/>
+        android:src="@drawable/man_1"/>
 
 </LinearLayout>
