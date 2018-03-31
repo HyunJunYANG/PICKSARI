@@ -1,4 +1,4 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -6,8 +6,34 @@
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="16dp"
+        android:text="삑사리의 음악추천"
+        android:textColor="#949494"
+        android:textStyle="bold"
+        android:id="@+id/textView" />
+
+    <Button
+        android:id="@+id/btn_rnb"
+        android:layout_width="102dp"
+        android:layout_height="25dp"
+        android:layout_alignStart="@+id/textView"
+        android:layout_below="@+id/textView"
+        android:layout_marginTop="13dp"
+        android:background="@drawable/my_genre_btn"
+        android:text="@string/genre1"
+        android:textColor="#ababab" />
+
+    <ListView
+        android:id="@+id/lv_music"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/btn_rnb"
+        android:layout_marginTop="25dp" />
 
-</FrameLayout>
+</RelativeLayout>
