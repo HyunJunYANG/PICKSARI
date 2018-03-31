@@ -17,23 +17,93 @@
         android:textStyle="bold"
         android:id="@+id/textView" />
 
-    <Button
-        android:id="@+id/btn_rnb"
-        android:layout_width="102dp"
-        android:layout_height="25dp"
-        android:layout_alignStart="@+id/textView"
-        android:layout_below="@+id/textView"
-        android:layout_marginTop="13dp"
-        android:background="@drawable/my_genre_btn"
-        android:text="@string/genre1"
-        android:textColor="#ababab" />
+    <LinearLayout
+        android:id="@+id/layout_one"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="44dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_rnb"
+            android:layout_width="55dp"
+            android:layout_height="25dp"
+            android:layout_weight="1"
+            android:background="@drawable/my_genre_btn"
+            android:onClick="onClick"
+            android:text="@string/genre1"
+            android:textColor="#ababab" />
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/btn_ballad"
+            android:layout_width="55dp"
+            android:layout_height="25dp"
+            android:layout_weight="1"
+            android:background="@drawable/my_genre_not_btn"
+            android:text="ballad"
+            android:textColor="#ababab" />
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/btn_dance"
+            android:layout_width="55dp"
+            android:layout_height="25dp"
+            android:layout_weight="1"
+            android:background="@drawable/my_genre_not_btn"
+            android:text="dance"
+            android:textColor="#ababab" />
+
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/btn_hiphop"
+            android:layout_width="55dp"
+            android:layout_height="25dp"
+            android:layout_weight="1"
+            android:background="@drawable/my_genre_not_btn"
+            android:text="hiphop"
+            android:textColor="#ababab" />
+
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/btn_rock"
+            android:layout_width="55dp"
+            android:layout_height="25dp"
+            android:layout_weight="1"
+            android:background="@drawable/my_genre_not_btn"
+            android:text="rock"
+            android:textColor="#ababab" />
+
+    </LinearLayout>
 
     <ListView
         android:id="@+id/lv_music"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentEnd="true"
-        android:layout_below="@+id/btn_rnb"
-        android:layout_marginTop="25dp" />
+        android:layout_below="@id/layout_one" />
 
 </RelativeLayout>
