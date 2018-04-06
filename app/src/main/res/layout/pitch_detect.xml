@@ -15,14 +15,25 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
             android:src="@drawable/loading_bar"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textColor="#de000000"
+            android:layout_centerHorizontal="true"
+            android:lineSpacingExtra="6sp"
+            android:gravity="center_horizontal"
+            tools:text="음역대 측정 중 …"
+            />
     </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_weight="7">
+        android:layout_weight="10">
 
         <ImageView
             android:id="@+id/man_picture"

@@ -9,6 +9,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.TextView;
 
 public class PitchDetectStart2 extends AppCompatActivity {
 
@@ -46,6 +47,10 @@ public class PitchDetectStart2 extends AppCompatActivity {
                         MY_PERMISSIONS_REQUEST_RECORD_AUDIO);
             }
         }
+
+        TextView textView = findViewById(R.id.startTextView);
+        textView.bringToFront();
+        textView.setText("당신’의 음역대를 \n측정 해보겠소.");
 
         handler = new Handler();
         handler.postDelayed(runnable, 2000); //2초 지연

@@ -7,18 +7,33 @@
     android:orientation="vertical"
     tools:context="com.yapp.picksari.PitchDetectStart2">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1.7"
-        android:orientation="vertical">
+        android:layout_weight="1.7">
+
         <ImageView
+            android:id="@+id/startBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="7dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
             android:src="@drawable/box"/>
-    </LinearLayout>
+
+        <TextView
+            android:id="@+id/startTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15sp"
+            android:textSize="15sp"
+            android:layout_alignTop="@id/startBox"
+            android:textColor="#de000000"
+            android:lineSpacingExtra="5sp"
+            android:gravity="center_horizontal"
+            tools:text="‘당신’의 음역대를 \n측정 해보겠소."
+            />
+    </RelativeLayout>
 
     <ImageView
         android:id="@+id/man_1"
