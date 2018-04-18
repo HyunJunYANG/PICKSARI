@@ -8,16 +8,12 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.yapp.picksari.Network.SendPost;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 public class PitchResult extends AppCompatActivity {
     ImageView resultImage;
     Handler handler;
     TextView mainText;
     String scaleInfo;
+    String highScaleInfo;
 
     //postDealyed로 실행되는 쓰레드, 메인액티비티로 넘어간다
     Runnable runnable = new Runnable() {
@@ -47,8 +43,9 @@ public class PitchResult extends AppCompatActivity {
             Log.d("MainActivity", "nulltext");
         }
         scaleInfo = intent.getStringExtra("scaleInfo");
+        highScaleInfo = intent.getStringExtra("highScaleInfo");
 
-        choiseImage(scaleInfo);
+        choiseImage(highScaleInfo, scaleInfo);
 
         handler = new Handler();
 
@@ -56,7 +53,7 @@ public class PitchResult extends AppCompatActivity {
     }
 
     //이미지를 선택하는 함수
-    public void choiseImage(String scaleInfo) {
+    public void choiseImage(String highScaleInfo, String scaleInfo) {
         //경우의 수가 많으므로 switch문으로 한다.
         switch(scaleInfo) {
             case "2\' 도":
@@ -67,7 +64,7 @@ public class PitchResult extends AppCompatActivity {
             case "2\' 라":
             case "2\' 시":
                 resultImage.setImageResource(R.drawable.cow_image);
-                mainText.setText("당신의 음역대는 " + scaleInfo + "\n묵직한 소와 같아!");
+                mainText.setText("당신의 음역대는 " + scaleInfo + "~" + highScaleInfo + "\n묵직한 소와 같아!");
                 break;
             case "3\' 도":
             case "3\' 레":
@@ -77,7 +74,7 @@ public class PitchResult extends AppCompatActivity {
             case "3\' 라":
             case "3\' 시":
                 resultImage.setImageResource(R.drawable.bird_image);
-                mainText.setText("당신의 음역대는 " + scaleInfo + "\n꾀꼬리같은 음역대를 가졌군!");
+                mainText.setText("당신의 음역대는 " + scaleInfo + "~" + highScaleInfo + "\n꾀꼬리같은 음역대를 가졌군!");
                 break;
             case "4\' 도":
             case "4\' 레":
@@ -87,11 +84,11 @@ public class PitchResult extends AppCompatActivity {
             case "4\' 라":
             case "4\' 시":
                 resultImage.setImageResource(R.drawable.dolphin_image);
-                mainText.setText("당신의 음역대는 " + scaleInfo + "\n돌고래와 대화가 가능하겠어");
+                mainText.setText("당신의 음역대는 " + scaleInfo + "~" + highScaleInfo + "\n돌고래와 대화가 가능하겠어");
                 break;
             default:
                 resultImage.setImageResource(R.drawable.cow_image);
-                mainText.setText("당신의 음역대는 " + scaleInfo + "\n묵직한 소와 같아!");
+                mainText.setText("당신의 음역대는 " + scaleInfo + "~" + highScaleInfo + "\n묵직한 소와 같아!");
                 break;
         }
     }

@@ -56,7 +56,7 @@
             android:layout_height="wrap_content"
             android:textSize="50sp"
             android:textColor="#ffe000"
-            android:text="ㅋㅋㅋ"
+            android:text=""
             android:layout_alignBottom="@+id/round"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="10dp"/>

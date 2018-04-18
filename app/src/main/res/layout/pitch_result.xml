@@ -18,7 +18,7 @@
         android:id="@+id/mainText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="당신의 음역대는 ~~ \n 돌고래와 대화가 가능하겠어"
+        android:text="당신의 음역대는 XX ~ YY \n 돌고래와 대화가 가능하겠어"
         android:textColor="#de000000"
         android:lineSpacingExtra="5sp"
         android:textSize="15sp"
