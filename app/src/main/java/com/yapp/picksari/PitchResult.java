@@ -55,7 +55,7 @@ public class PitchResult extends AppCompatActivity {
     //이미지를 선택하는 함수
     public void choiseImage(String highScaleInfo, String scaleInfo) {
         //경우의 수가 많으므로 switch문으로 한다.
-        switch(scaleInfo) {
+        switch(highScaleInfo) {
             case "2\' 도":
             case "2\' 레":
             case "2\' 미":
