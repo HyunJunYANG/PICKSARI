@@ -8,6 +8,47 @@
     tools:context="com.yapp.picksari.PitchDetect">
 
     <RelativeLayout
+        android:id="@+id/waitLayout"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.7">
+
+        <ImageView
+            android:id="@+id/waitStartBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/box"/>
+
+        <TextView
+            android:id="@+id/changeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15sp"
+            android:textSize="15sp"
+            android:layout_alignTop="@id/waitStartBox"
+            android:textColor="#de000000"
+            android:visibility="gone"
+            android:lineSpacingExtra="5sp"
+            android:gravity="center_horizontal"
+            tools:text="이제 최고음을\n측정 해보겠소."
+            />
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/waitMan"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="8.3"
+        android:scaleType="fitXY"
+        android:visibility="gone"
+        android:src="@drawable/man_1"/>
+
+    <RelativeLayout
+        android:id="@+id/topLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="2"
@@ -18,7 +59,14 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
             android:src="@drawable/loading_bar"/>
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="@android:style/Widget.ProgressBar.Horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:max="5000" />
         <TextView
+            android:id="@+id/detectText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="14sp"
@@ -31,6 +79,7 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/middleLayout"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_weight="10">
@@ -66,6 +115,7 @@
 
 
     <ImageView
+        android:id="@+id/piano"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:src="@drawable/piano"

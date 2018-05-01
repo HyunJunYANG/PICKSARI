@@ -13,7 +13,11 @@ import android.widget.TextView;
 
 public class PitchDetectStart2 extends AppCompatActivity {
 
+    private Handler nextTextHandler1;
+    private Handler nextTextHandler2;
+    private Handler nextTextHandler3;
     private Handler handler;
+    TextView textView;
     static String LOG_TAG="PitchDetectStart2";
     final int MY_PERMISSIONS_REQUEST_RECORD_AUDIO = 1;
 
@@ -48,12 +52,35 @@ public class PitchDetectStart2 extends AppCompatActivity {
             }
         }
 
-        TextView textView = findViewById(R.id.startTextView);
+        textView = findViewById(R.id.startTextView);
         textView.bringToFront();
-        textView.setText("당신’의 음역대를 \n측정 해보겠소.");
+        textView.setText("어서오시게,\n Picksari에 온 것을 환영하오.");
+        //textView.setText("당신’의 음역대를 \n측정 해보겠소.");
 
         handler = new Handler();
-        handler.postDelayed(runnable, 2000); //2초 지연
+        nextTextHandler1 = new Handler();
+        nextTextHandler2 = new Handler();
+        nextTextHandler3 = new Handler();
+        nextTextHandler1.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                textView.setText("긴말않고 당신의\n 음역대를 측정해보도록 하지.");
+                nextTextHandler2.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        textView.setText("우선\n 당신의 최저음부터 알아보겠소.");
+                        nextTextHandler3.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                textView.setText("조용한 장소에서\n들리는 음을 따라 소리내주시오.");
+                                handler.postDelayed(runnable, 2000); //2초 지연
+                            }
+                        },2000);
+                    }
+                },2000);
+            }
+        },2000);
+
     }
 
     //첫 권한 설정에서 아니요를 누른 경우

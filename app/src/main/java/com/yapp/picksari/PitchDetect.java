@@ -10,7 +10,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.Timer;
@@ -40,29 +43,47 @@ public class PitchDetect extends AppCompatActivity {
             523.25f, 587.33f, 659.25f, 698.46f, 783.99f, 880f, 987.77f,
             1046.5f, 1174.66f, 1318.51f, 1396.91f, 1567.98f, 1760f, 1975.53f, 10000f};
     //hz 배열의 index
-    int hzIndex = highPitchStart;
+    int hzIndex = lowPitchStart;
     //scale배열의 index
-    int scaleIndex = highPitchStart;
+    int scaleIndex = lowPitchStart;
     float pitch = 0f;
     Thread thread;
     ImageView manPicture;
     int pitchSuccess;
     private TimerTask detectTimer;
+    private TimerTask progressTimer;
     Timer timer;
+    Timer progTimer;
     Handler handler = new Handler();
+
+    RelativeLayout waitLayout;
+    ImageView waitMan;
+    ImageView waitStartBox;
+    TextView changeTextView;
+    RelativeLayout topLayout;
+    RelativeLayout middleLayout;
+    ImageView piano;
     TextView pitchText;
-    String highScale;
+    String lowScale;
 
     float pitchInHz;
 
     int pitchDetectFlag = 0;
-    //실패 감시 flag -> 0:최고음 1회차, 1:최고음 2회차, 2:최저음 1회차, 3:최저음 2회차
+    //실패 감시 flag -> 0:최저음 1회차, 1:최저음 2회차, 2:최고음 1회차, 3:최고음 2회차
     int failFlag = 0;
 
     SoundPool soundPool;
     int soundId;
-    final int soundList[] = {R.raw.testsound1, R.raw.testsound8, R.raw.testsound1, R.raw.testsound8, R.raw.testsound1, R.raw.testsound8};
-    int soundIndex = 0;
+    final int soundList[] = {R.raw.testsound1, R.raw.testsound8, R.raw.testsound1, R.raw.testsound8, R.raw.testsound1, R.raw.testsound8,
+            R.raw.testsound1, R.raw.testsound8, R.raw.testsound1, R.raw.testsound8, R.raw.testsound1, R.raw.testsound8,
+            R.raw.testsound1, R.raw.testsound8, R.raw.testsound1, R.raw.testsound8, R.raw.testsound1, R.raw.testsound8,
+            R.raw.testsound1, R.raw.testsound8, R.raw.testsound1, R.raw.testsound8, R.raw.testsound1, R.raw.testsound8,
+            R.raw.testsound1, R.raw.testsound8, R.raw.testsound1, R.raw.testsound8, R.raw.testsound1, R.raw.testsound8,
+            R.raw.testsound1, R.raw.testsound8, R.raw.testsound1, R.raw.testsound8, R.raw.testsound1, R.raw.testsound8,
+            R.raw.testsound1, R.raw.testsound8, R.raw.testsound1, R.raw.testsound8, R.raw.testsound1, R.raw.testsound8};
+    int soundIndex = 8;
+
+    ProgressBar progressBar;
 
     //postDelay 그림변경
     Runnable runnable = new Runnable() {
@@ -107,10 +128,19 @@ public class PitchDetect extends AppCompatActivity {
         //안꺼지게
         getWindow().addFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
+        waitLayout = findViewById(R.id.waitLayout);
+        waitMan = findViewById(R.id.waitMan);
+        waitStartBox = findViewById(R.id.waitStartBox);
+        changeTextView = findViewById(R.id.changeTextView);
+        topLayout = findViewById(R.id.topLayout);
+        middleLayout = findViewById(R.id.middleLayout);
+        piano = findViewById(R.id.piano);
+        progressBar = findViewById(R.id.progressBar);
         manPicture = findViewById(R.id.man_picture);
         ImageView round = findViewById(R.id.round);
         pitchText = findViewById(R.id.pitchtext);
 
+        initProg();
         pitchText.setText(scale[scaleIndex]);
         round.bringToFront();
         pitchText.bringToFront();
@@ -124,6 +154,7 @@ public class PitchDetect extends AppCompatActivity {
         },200);
 
         detectTime();
+        progressBarTimer();
 
         Handler detectHandler = new Handler();
         detectHandler.postDelayed(new Runnable() {
@@ -162,17 +193,50 @@ public class PitchDetect extends AppCompatActivity {
                                 },1000);
                             } else if(failFlag == 1) {
                                 failFlag = 2;
-                                hzIndex = lowPitchStart;
-                                scaleIndex = lowPitchStart;
-                                Handler nextChanceHandler = new Handler();
-                                nextChanceHandler.postDelayed(new Runnable() {
+                                hzIndex = highPitchStart;
+                                scaleIndex = highPitchStart;
+                                soundIndex = highPitchStart;
+
+                                topLayout.setVisibility(View.GONE);
+                                middleLayout.setVisibility(View.GONE);
+                                piano.setVisibility(View.GONE);
+                                waitLayout.setVisibility(View.VISIBLE);
+                                waitMan.setVisibility(View.VISIBLE);
+                                waitStartBox.setVisibility(View.INVISIBLE);
+                                changeTextView.setVisibility(View.VISIBLE);
+                                changeTextView.bringToFront();
+                                soundId = soundPool.load(PitchDetect.this, soundList[soundIndex], 1);
+
+                                Handler lowHighChangerHandler = new Handler();
+
+                                lowHighChangerHandler.postDelayed(new Runnable() {
                                     @Override
                                     public void run() {
-                                        pitchDetectFlag = 0;
-                                        manPicture.setImageResource(R.drawable.man_2);
-                                        pitchText.setText(scale[scaleIndex]);
+                                        Handler nextChanceHandler = new Handler();
+                                        nextChanceHandler.postDelayed(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                topLayout.setVisibility(View.VISIBLE);
+                                                middleLayout.setVisibility(View.VISIBLE);
+                                                piano.setVisibility(View.VISIBLE);
+                                                waitLayout.setVisibility(View.GONE);
+                                                waitMan.setVisibility(View.GONE);
+                                                manPicture.setImageResource(R.drawable.man_2);
+                                                pitchText.setText(scale[scaleIndex]);
+
+                                                soundPool.play(soundId,1.0F, 1.0F,  1,  0,  1.0F);
+                                                Handler flagChangeHandler = new Handler();
+                                                flagChangeHandler.postDelayed(new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        pitchDetectFlag = 0;
+                                                    }
+                                                },2000);
+                                            }
+                                        },1000);
                                     }
-                                },1000);
+                                }, 0);
+
                             } else if(failFlag == 2) {
                                 failFlag = 3;
                                 Handler nextChanceHandler = new Handler();
@@ -195,7 +259,7 @@ public class PitchDetect extends AppCompatActivity {
                                         public void run() {
                                             Intent intent = new Intent(PitchDetect.this, PitchResult.class); // 수정
                                             intent.putExtra("scaleInfo", pitchText.getText().toString());
-                                            intent.putExtra("highScaleInfo", highScale);
+                                            intent.putExtra("lowScaleInfo", lowScale);
                                             startActivity(intent);
                                             System.exit(0);
                                         }
@@ -215,6 +279,46 @@ public class PitchDetect extends AppCompatActivity {
         timer.schedule(detectTimer, 5000, 5000);
     }
 
+
+    public void progressBarTimer() {
+        progressTimer = new TimerTask(){ //timerTask는 timer가 일할 내용을 기록하는 객체
+
+            @Override
+            public void run() {
+                // TODO Auto-generated method stub
+                //이곳에 timer가 동작할 task를 작성
+                increaseBar(); //timer가 동작할 내용을 갖는 함수 호출
+            }
+
+        };
+        progTimer = new Timer();
+        progTimer.schedule(progressTimer, 0, 100);
+    }
+
+    public void initProg() {
+        progressBar.setMax(50);
+        progressBar.setProgress(0);
+    }
+
+    int count = 0;
+    public void increaseBar() {
+        runOnUiThread( //progressBar는 ui에 해당하므로 runOnUiThread로 컨트롤해야한다
+                new Runnable() { //thread구동과 마찬가지로 Runnable을 써주고
+                    @Override
+                    public void run() { //run을 해준다. 그러나 일반 thread처럼 .start()를 해줄 필요는 없다
+                        Log.i(LOG_TAG, "Progress Increase");
+                        count = progressBar.getProgress();
+                        if(count < 50){
+                            count = count + 1;
+                        }else if(count == 50){
+                            initProg();
+                            count = 0;
+                        }
+                        progressBar.setProgress(count);
+                    }
+                }
+        );
+    }
 
     //음역대를 측정하는 함수
     public void detect() {
@@ -238,7 +342,7 @@ public class PitchDetect extends AppCompatActivity {
                         public void run() {
                             Intent intent = new Intent(PitchDetect.this, PitchResult.class); // 수정
                             intent.putExtra("scaleInfo", pitchText.getText().toString());
-                            intent.putExtra("highScaleInfo", highScale);
+                            intent.putExtra("lowScaleInfo", lowScale);
                             startActivity(intent);
                             System.exit(0);
                         }
@@ -253,7 +357,7 @@ public class PitchDetect extends AppCompatActivity {
                     @SuppressLint("ResourceType")
                     @Override
                     public void run() {
-                        if (failFlag < 2) {
+                        if (failFlag >= 2) {
                             //음이 기준보다 높으면 이미지바꾸고 sleep
                             if (!thread.isInterrupted()) {
                                 if (pitchInHz > hz[hzIndex]) {
@@ -266,7 +370,8 @@ public class PitchDetect extends AppCompatActivity {
                                     soundIndex = soundIndex + 1;
                                     soundId = soundPool.load(PitchDetect.this, soundList[soundIndex], 1);
                                     pitchSuccess = 1;
-                                    failFlag = 0;
+                                    //최고음 탐색이므로 failFlag를 2로
+                                    failFlag = 2;
 
                                     pitchText.setText(scale[scaleIndex]);
                                     //타이머를 죽인다. 성공하면 타이머 리셋해야하기 때문
@@ -290,10 +395,9 @@ public class PitchDetect extends AppCompatActivity {
                                 } else { //음이 기준보다 낮으면
                                     //Log.d(LOG_TAG, "ThreadSleep Pitch is low.");
                                     pitchSuccess = 2;
-                                    highScale = pitchText.getText().toString();
                                 }
                             }
-                        } else if (failFlag >= 2) {
+                        } else if (failFlag < 2) {
                             if (!thread.isInterrupted()) {
                                 if (pitchInHz > hz[hzIndex-1] && pitchInHz < hz[hzIndex]) {
                                     Log.d(LOG_TAG, String.valueOf(hz[hzIndex]));
@@ -302,9 +406,11 @@ public class PitchDetect extends AppCompatActivity {
                                     //인덱스를 낮춘다
                                     hzIndex = hzIndex - 1;
                                     scaleIndex = scaleIndex - 1;
+                                    soundIndex = soundIndex - 1;
+                                    soundId = soundPool.load(PitchDetect.this, soundList[soundIndex], 1);
                                     pitchSuccess = 1;
-                                    //최저음 탐색이므로 flag를 2로 놓는다
-                                    failFlag = 2;
+                                    //최저음 탐색이므로 flag를 0으로 놓는다
+                                    failFlag = 0;
                                     pitchText.setText(scale[scaleIndex]);
 
                                     //타이머를 죽인다. 성공하면 타이머 리셋해야하기 때문
@@ -328,6 +434,7 @@ public class PitchDetect extends AppCompatActivity {
                                 } else { //음이 기준보다 높으면
                                     //Log.d(LOG_TAG, "ThreadSleep Pitch is low.");
                                     pitchSuccess = 2;
+                                    lowScale = pitchText.getText().toString();
                                 }
                             }
                         }
@@ -349,6 +456,7 @@ public class PitchDetect extends AppCompatActivity {
         Log.d(LOG_TAG, "onStop");
         //타이머 캔슬과 쓰레드 캔슬
         timer.cancel();
+        progTimer.cancel();
         thread.interrupt();
 
         soundPool.release();
