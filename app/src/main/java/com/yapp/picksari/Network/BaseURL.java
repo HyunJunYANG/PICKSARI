@@ -5,7 +5,7 @@ package com.yapp.picksari.Network;
  */
 
 public class BaseURL {
-    private String url = "http://172.16.1.208:8080/";
+    private String url = "http://172.30.1.22:8080/";
     public BaseURL(){
 
     }

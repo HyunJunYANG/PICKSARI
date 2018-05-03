@@ -1,13 +1,20 @@
 package com.yapp.picksari;
 
-import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListView;
+import com.yapp.picksari.Item.musicItem;
+
+
+import java.util.ArrayList;
+import java.util.List;
+
 
 
 /**
@@ -23,22 +30,31 @@ public class HomeFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private static final String ARG_PARAM3 = "param3";
+    private static final String ARG_PARAM4 = "param4";
+    private static final String ARG_PARAM5 = "param5";
+    private static final String ARG_PARAM6 = "param6";
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
     private static final String ARG_POSITION = "position";
     private static final String LOG_TAG = HomeFragment.class.getSimpleName();
-
+    private Bundle bundle = getArguments();
     private int position;
 
     private OnFragmentInteractionListener mListener;
 
+    private static List<musicItem> item;
+    private static List<musicItem> dance_list, ballad_list, rnb_list, rock_list, hiphop_list;
+    private Button rnb, ballad, dance, rock, hiphop;
+    private int id = 1;
 
     public static HomeFragment newInstance(int position) {
         HomeFragment f = new HomeFragment();
         Bundle b = new Bundle();
         b.putInt(ARG_POSITION, position);
+
         f.setArguments(b);
 
         return f;
@@ -46,6 +62,7 @@ public class HomeFragment extends Fragment {
 
     public HomeFragment() {
         // Required empty public constructor
+
     }
 
     /**
@@ -57,29 +74,121 @@ public class HomeFragment extends Fragment {
      * @return A new instance of fragment HomeFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static HomeFragment newInstance(String param1, String param2) {
+    public static HomeFragment newInstance(int param1, List<musicItem> param2, List<musicItem> param3,
+                                           List<musicItem> param4, List<musicItem> param5,
+                                           List<musicItem> param6) {
         HomeFragment fragment = new HomeFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putInt(ARG_PARAM1, param1);
+        args.putParcelableArrayList(ARG_PARAM2, (ArrayList<? extends Parcelable>) param2);
+        args.putParcelableArrayList(ARG_PARAM3, (ArrayList<? extends Parcelable>) param3);
+        args.putParcelableArrayList(ARG_PARAM4, (ArrayList<? extends Parcelable>) param4);
+        args.putParcelableArrayList(ARG_PARAM5, (ArrayList<? extends Parcelable>) param5);
+        args.putParcelableArrayList(ARG_PARAM6, (ArrayList<? extends Parcelable>) param6);
+
+//        item = param2;
+        rnb_list = param2;
+        dance_list = param3;
+        ballad_list = param4;
+        hiphop_list = param5;
+        rock_list = param6;
+
+
         fragment.setArguments(args);
+
         return fragment;
     }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false);
+
+        final View view = inflater.inflate(R.layout.fragment_home, container, false);
+
+        dance = (Button) view.findViewById(R.id.btn_dance);
+        ballad = (Button) view.findViewById(R.id.btn_ballad);
+        rnb = (Button) view.findViewById(R.id.btn_rnb);
+        dance = (Button) view.findViewById(R.id.btn_dance);
+        hiphop = (Button) view.findViewById(R.id.btn_hiphop);
+        rock = (Button) view.findViewById(R.id.btn_rock);
+
+        dance.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View v){
+                ListView listView = (ListView) view.findViewById(R.id.lv_music);
+                listView.setAdapter(new ListViewAdapter(getActivity(), android.R.layout.activity_list_item, dance_list));
+                dance.setBackgroundResource(R.drawable.my_genre_btn);
+                ballad.setBackgroundResource(R.drawable.my_genre_not_btn);
+                rnb.setBackgroundResource(R.drawable.my_genre_not_btn);
+                hiphop.setBackgroundResource(R.drawable.my_genre_not_btn);
+                rock.setBackgroundResource(R.drawable.my_genre_not_btn);
+            }
+
+        });
+
+        ballad.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ListView listView = (ListView) view.findViewById(R.id.lv_music);
+                listView.setAdapter(new ListViewAdapter(getActivity(), android.R.layout.activity_list_item, ballad_list));
+                ballad.setBackgroundResource(R.drawable.my_genre_btn);
+                dance.setBackgroundResource(R.drawable.my_genre_not_btn);
+                rnb.setBackgroundResource(R.drawable.my_genre_not_btn);
+                hiphop.setBackgroundResource(R.drawable.my_genre_not_btn);
+                rock.setBackgroundResource(R.drawable.my_genre_not_btn);
+            }
+
+        });
+        rnb.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ListView listView = (ListView) view.findViewById(R.id.lv_music);
+                listView.setAdapter(new ListViewAdapter(getActivity(), android.R.layout.activity_list_item, rnb_list));
+                rnb.setBackgroundResource(R.drawable.my_genre_btn);
+                ballad.setBackgroundResource(R.drawable.my_genre_not_btn);
+                dance.setBackgroundResource(R.drawable.my_genre_not_btn);
+                hiphop.setBackgroundResource(R.drawable.my_genre_not_btn);
+                rock.setBackgroundResource(R.drawable.my_genre_not_btn);
+            }
+
+        });
+        hiphop.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ListView listView = (ListView) view.findViewById(R.id.lv_music);
+                listView.setAdapter(new ListViewAdapter(getActivity(), android.R.layout.activity_list_item, hiphop_list));
+                hiphop.setBackgroundResource(R.drawable.my_genre_btn);
+                ballad.setBackgroundResource(R.drawable.my_genre_not_btn);
+                rnb.setBackgroundResource(R.drawable.my_genre_not_btn);
+                dance.setBackgroundResource(R.drawable.my_genre_not_btn);
+                rock.setBackgroundResource(R.drawable.my_genre_not_btn);
+            }
+
+        });
+        rock.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ListView listView = (ListView) view.findViewById(R.id.lv_music);
+                listView.setAdapter(new ListViewAdapter(getActivity(), android.R.layout.activity_list_item, rock_list));
+                rock.setBackgroundResource(R.drawable.my_genre_btn);
+                ballad.setBackgroundResource(R.drawable.my_genre_not_btn);
+                rnb.setBackgroundResource(R.drawable.my_genre_not_btn);
+                hiphop.setBackgroundResource(R.drawable.my_genre_not_btn);
+                dance.setBackgroundResource(R.drawable.my_genre_not_btn);
+            }
+
+        });
+
+        ListView listView = (ListView) view.findViewById(R.id.lv_music);
+        listView.setAdapter(new ListViewAdapter(getActivity(), android.R.layout.activity_list_item, rnb_list));
+
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -89,13 +198,8 @@ public class HomeFragment extends Fragment {
         }
     }
 
-    public void onActivityCreated(Bundle b){
+    public void onActivityCreated(Bundle b) {
         super.onActivityCreated(b);
-
-        ListView lvMusic = getActivity().findViewById(R.id.lv_music);
-
-
-
     }
 
     @Override
@@ -118,4 +222,16 @@ public class HomeFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
+
+    //    public static HomeFragment newInstance(String param1, String param2) {
+//        HomeFragment fragment = new HomeFragment();
+//        Bundle args = new Bundle();
+//        args.putString(ARG_PARAM1, param1);
+//        args.putString(ARG_PARAM1, param2);
+//        fragment.setArguments(args);
+//
+//        return fragment;
+//    }
 }
+

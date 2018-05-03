@@ -1,28 +1,21 @@
 package com.yapp.picksari;
 
-import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.media.Image;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.astuetz.PagerSlidingTabStrip;
-import com.yapp.picksari.Music.Music_list;
+import com.yapp.picksari.Item.musicItem;
 import com.yapp.picksari.Network.SendPost;
 
 import org.json.JSONArray;
@@ -30,12 +23,21 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     private SendPost octave_listSp;
     private Handler handler;
-    public ArrayList<Music_list> items= new ArrayList<>();
+    private Bundle bundle;
+    private Fragment f;
+    public List<musicItem> list = new ArrayList<>();
+    public List<musicItem> dance_list = new ArrayList<>();
+    public List<musicItem> ballad_list = new ArrayList<>();
+    public List<musicItem> rnb_list = new ArrayList<>();
+    public List<musicItem> hiphop_list = new ArrayList<>();
+    public List<musicItem> rock_list = new ArrayList<>();
+
 
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
     private static final int PERMISSIONS_REQUEST_RECORD = 100;
@@ -50,25 +52,19 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         ImageView ivSearch = (ImageView)findViewById(R.id.iv_search);
-
         ivSearch.bringToFront();
-
         ImageView icon = (ImageView)findViewById(R.id.logo_image);
-
         icon.bringToFront();
 
-
         pager = (ViewPager) findViewById(R.id.pager);
-        pager.setAdapter(new MyAdapter(getSupportFragmentManager()));
         tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
-        tabs.setViewPager(pager);
 
 //안꺼지게
         getWindow().addFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         TextView mainText = findViewById(R.id.mainText);
 
-        Intent intent = getIntent();
+        final Intent intent = getIntent();
         if(intent == null) {
             Log.d("MainActivity", "nulltext");
         }
@@ -77,47 +73,65 @@ public class MainActivity extends AppCompatActivity {
 //        mainText.setText(scaleInfo);
 
         handler = new Handler();
+        bundle = new Bundle();
+        f = new Fragment();
+//        String mOctave = "3\' 시";
 
-        String mOctave = "3\' 도";
         JSONObject jsonParam = new JSONObject();
         try {
             jsonParam.put("mOctave", scaleInfo.toString());
+//            jsonParam.put("mGenre", mGenre.toString());
         } catch (JSONException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
         octave_listSp = new SendPost(jsonParam, "/octave_list");
-
         final String[] SPresult = new String[1];
         new Thread() {
             public void run() {
                 SPresult[0] = octave_listSp.executeClient();
+                System.out.println(SPresult);
                 handler.post(new Runnable() {
                     public void run() {
-                        if(SPresult != null)
-                            JSONParser(SPresult);
-//                        System.out.println(items.get(0).getmSinger());
+                        JSONParser(SPresult);
+                        bundle.putParcelableArrayList("rnblist", (ArrayList<? extends Parcelable>) rnb_list);
+                        bundle.putParcelableArrayList("dancelist", (ArrayList<? extends Parcelable>) dance_list);
+                        bundle.putParcelableArrayList("balladlist", (ArrayList<? extends Parcelable>) ballad_list);
+                        bundle.putParcelableArrayList("hiphop", (ArrayList<? extends Parcelable>) hiphop_list);
+                        bundle.putParcelableArrayList("rocklist", (ArrayList<? extends Parcelable>) rock_list);
+                        pager.setAdapter(new MyAdapter(getSupportFragmentManager()));
+                        f.setArguments(bundle);
+                        tabs.setViewPager(pager);
                     }
                 });
             }
         }.start();
+
+
     }
 
     void JSONParser(String[] SP) {
         try {
             JSONArray JArray = new JSONArray(SP[0].toString());   // JSONArray 생성
-            Music_list[] music_array = new Music_list[JArray.length()];
             for (int i = 0; i < JArray.length(); i++) {
                 JSONObject jk = JArray.getJSONObject(i);  // JSONObject 추출
 
-                music_array[i] = new Music_list();
-                music_array[i].setmName(jk.getString("mName"));
-                music_array[i].setmSinger(jk.getString("mSinger"));
-                music_array[i].setmOctave(jk.getString("mOctave"));
-                music_array[i].setmGenre(jk.getString("mGenre"));
+                String mName = jk.getString("mName");
+                String mSinger = jk.getString("mSinger");
+                String mOctave = jk.getString("mOctave");
+                String mGenre = jk.getString("mGenre");
 
-                items.add(music_array[i]);
+                if(mGenre.equals("댄스"))
+                    dance_list.add(new musicItem(mName, mSinger,mOctave, mGenre));
+                else if(mGenre.equals("발라드"))
+                    ballad_list.add(new musicItem(mName, mSinger,mOctave, mGenre));
+                else if(mGenre.equals("R&B"))
+                    rnb_list.add(new musicItem(mName, mSinger,mOctave, mGenre));
+                else if(mGenre.equals("힙합"))
+                    hiphop_list.add(new musicItem(mName, mSinger,mOctave, mGenre));
+                else if(mGenre.equals("락"))
+                    rock_list.add(new musicItem(mName, mSinger,mOctave, mGenre));
             }
         }
         catch (JSONException e) {
@@ -140,8 +154,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     public class MyAdapter extends FragmentPagerAdapter {
-        private String[] titles = { getString(R.string.main_home),
-                getString(R.string.main_mypick) };
+        private String[] titles = { getString(R.string.main_home), getString(R.string.main_mypick) };
 
         public MyAdapter(android.support.v4.app.FragmentManager fm) {
             super(fm);
@@ -151,7 +164,7 @@ public class MainActivity extends AppCompatActivity {
         public android.support.v4.app.Fragment getItem(int position) {
             switch(position){
                 case 0:{
-                    return HomeFragment.newInstance(position);
+                    return HomeFragment.newInstance(position, list, dance_list, ballad_list, hiphop_list, rock_list);
                 }
                 case 1:{
                     return MyPickFragment.newInstance(position);
