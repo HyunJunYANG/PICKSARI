@@ -2,6 +2,7 @@ package com.yapp.picksari;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Color;
 import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.SoundPool;
@@ -64,6 +65,7 @@ public class PitchDetect extends AppCompatActivity {
     RelativeLayout middleLayout;
     ImageView piano;
     TextView pitchText;
+    TextView detectText;
     String lowScale;
 
     float pitchInHz;
@@ -180,6 +182,8 @@ public class PitchDetect extends AppCompatActivity {
                         if(pitchSuccess == 2) {
                             pitchDetectFlag = 1;
                             manPicture.setImageResource(R.drawable.man_4);
+                            pitchText.setTextColor(Color.parseColor("#9e9e9f"));
+                            initProg();
 
                             if(failFlag == 0) {
                                 failFlag = 1;
@@ -189,6 +193,7 @@ public class PitchDetect extends AppCompatActivity {
                                     public void run() {
                                         pitchDetectFlag = 0;
                                         manPicture.setImageResource(R.drawable.man_2);
+                                        pitchText.setTextColor(Color.parseColor("#ffe000"));
                                     }
                                 },1000);
                             } else if(failFlag == 1) {
@@ -202,9 +207,10 @@ public class PitchDetect extends AppCompatActivity {
                                 piano.setVisibility(View.GONE);
                                 waitLayout.setVisibility(View.VISIBLE);
                                 waitMan.setVisibility(View.VISIBLE);
-                                waitStartBox.setVisibility(View.INVISIBLE);
+                                waitStartBox.setVisibility(View.VISIBLE);
                                 changeTextView.setVisibility(View.VISIBLE);
                                 changeTextView.bringToFront();
+                                changeTextView.setText("이제 최고음을\n측정 해보겠소.");
                                 soundId = soundPool.load(PitchDetect.this, soundList[soundIndex], 1);
 
                                 Handler lowHighChangerHandler = new Handler();
@@ -223,6 +229,7 @@ public class PitchDetect extends AppCompatActivity {
                                                 waitMan.setVisibility(View.GONE);
                                                 manPicture.setImageResource(R.drawable.man_2);
                                                 pitchText.setText(scale[scaleIndex]);
+                                                pitchText.setTextColor(Color.parseColor("#ffe000"));
 
                                                 soundPool.play(soundId,1.0F, 1.0F,  1,  0,  1.0F);
                                                 Handler flagChangeHandler = new Handler();
@@ -245,6 +252,7 @@ public class PitchDetect extends AppCompatActivity {
                                     public void run() {
                                         pitchDetectFlag = 0;
                                         manPicture.setImageResource(R.drawable.man_2);
+                                        pitchText.setTextColor(Color.parseColor("#ffe000"));
                                     }
                                 },1000);
                             } else {
@@ -298,6 +306,7 @@ public class PitchDetect extends AppCompatActivity {
     public void initProg() {
         progressBar.setMax(50);
         progressBar.setProgress(0);
+        count = 0;
     }
 
     int count = 0;
@@ -376,6 +385,8 @@ public class PitchDetect extends AppCompatActivity {
                                     pitchText.setText(scale[scaleIndex]);
                                     //타이머를 죽인다. 성공하면 타이머 리셋해야하기 때문
                                     timer.cancel();
+                                    progressTimer.cancel();
+                                    initProg();
 
                                     pitchDetectFlag = 1;
                                     manPicture.setImageResource(R.drawable.man_3);
@@ -386,6 +397,7 @@ public class PitchDetect extends AppCompatActivity {
                                         handler.postDelayed(runnable, 1000);
                                         //타이머 리셋
                                         detectTime();
+                                        progressBarTimer();
                                         //thread.interrupt();
                                         //Log.d(LOG_TAG, "ThreadSleepInterrupted");
                                         Log.d(LOG_TAG, "ThreadSleepRestart");
@@ -415,6 +427,8 @@ public class PitchDetect extends AppCompatActivity {
 
                                     //타이머를 죽인다. 성공하면 타이머 리셋해야하기 때문
                                     timer.cancel();
+                                    progressTimer.cancel();
+                                    initProg();
 
                                     pitchDetectFlag = 1;
                                     manPicture.setImageResource(R.drawable.man_3);
@@ -425,6 +439,7 @@ public class PitchDetect extends AppCompatActivity {
                                         handler.postDelayed(runnable, 1000);
                                         //타이머 리셋
                                         detectTime();
+                                        progressBarTimer();
                                         //thread.interrupt();
                                         //Log.d(LOG_TAG, "ThreadSleepInterrupted");
                                         Log.d(LOG_TAG, "ThreadSleepRestart");

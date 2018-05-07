@@ -53,18 +53,6 @@
         android:layout_height="0dp"
         android:layout_weight="2"
         android:orientation="vertical">
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"
-            android:src="@drawable/loading_bar"/>
-        <ProgressBar
-            android:id="@+id/progressBar"
-            style="@android:style/Widget.ProgressBar.Horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:max="5000" />
         <TextView
             android:id="@+id/detectText"
             android:layout_width="wrap_content"
@@ -74,8 +62,32 @@
             android:layout_centerHorizontal="true"
             android:lineSpacingExtra="6sp"
             android:gravity="center_horizontal"
-            tools:text="음역대 측정 중 …"
+            android:text="음역대 측정 중 …"
             />
+        <LinearLayout
+            android:id="@+id/progressBarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@id/detectText">
+            <android.support.v4.widget.Space
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"/>
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="@android:style/Widget.ProgressBar.Horizontal"
+                android:progressDrawable="@drawable/picksari_progressbar"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="11"
+                android:max="50" />
+            <android.support.v4.widget.Space
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"/>
+        </LinearLayout>
+
     </RelativeLayout>
 
     <RelativeLayout
