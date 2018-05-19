@@ -1,12 +1,29 @@
 package com.yapp.picksari;
 
-import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.ListFragment;
+import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ListView;
+import android.widget.Toast;
+
+import com.yapp.picksari.Adapter.MyCursorAdapter;
+import com.yapp.picksari.DBHelper.DBhelper;
+import com.yapp.picksari.Music.Music_list;
+
+import java.util.ArrayList;
 
 
 /**
@@ -32,6 +49,31 @@ public class MyPickFragment extends Fragment {
     private int position;
 
     private MyPickFragment.OnFragmentInteractionListener mListener;
+
+    public static ArrayList<Music_list> musicPickList;
+    static DBhelper pickhelper;
+    static SQLiteDatabase pickdb;
+    static Cursor pickcursor;
+    static MyCursorAdapter pickadapter;
+    ListView lvMusicpick;
+
+
+    // 새로
+    ListView listView;
+    public static MyCursorAdapter myAdapter;
+    public static DBhelper myHelper;
+
+    Button dance;
+    Button rnb;
+    Button ballad;
+    Button hiphop;
+    Button rock;
+
+    static String flag = "알앤비";
+    ImageButton btnPick;
+
+    public static AlertDialog.Builder builder;
+
 
 
     public static MyPickFragment newInstance(int position) {
@@ -79,14 +121,158 @@ public class MyPickFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_my_pick, container, false);
+
+        final View view = inflater.inflate(R.layout.fragment_my_pick, container, false);
+
+        dance = (Button) view.findViewById(R.id.btn_dance_pick);
+        ballad = (Button) view.findViewById(R.id.btn_ballad_pick);
+        rnb = (Button) view.findViewById(R.id.btn_rnb_pick);
+        dance = (Button) view.findViewById(R.id.btn_dance_pick);
+        hiphop = (Button) view.findViewById(R.id.btn_hiphop_pick);
+        rock = (Button) view.findViewById(R.id.btn_rock_pick);
+
+
+        listView = (ListView) view.findViewById(R.id.lv_pick_music);
+        myAdapter = new MyCursorAdapter(this.getActivity(), null);
+        myHelper = new DBhelper(this.getActivity());
+
+        ballad.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                flag = "발라드";
+                dance.setBackgroundResource(R.drawable.my_genre_not_btn);
+                ballad.setBackgroundResource(R.drawable.my_genre_btn);
+                rnb.setBackgroundResource(R.drawable.my_genre_not_btn);
+                hiphop.setBackgroundResource(R.drawable.my_genre_not_btn);
+                rock.setBackgroundResource(R.drawable.my_genre_not_btn);
+                onResume();
+            }
+        });
+
+        dance.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                flag = "댄스";
+                dance.setBackgroundResource(R.drawable.my_genre_btn);
+                ballad.setBackgroundResource(R.drawable.my_genre_not_btn);
+                rnb.setBackgroundResource(R.drawable.my_genre_not_btn);
+                hiphop.setBackgroundResource(R.drawable.my_genre_not_btn);
+                rock.setBackgroundResource(R.drawable.my_genre_not_btn);
+                onResume();
+            }
+        });
+
+        hiphop.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                flag = "힙합";
+                dance.setBackgroundResource(R.drawable.my_genre_not_btn);
+                ballad.setBackgroundResource(R.drawable.my_genre_not_btn);
+                rnb.setBackgroundResource(R.drawable.my_genre_not_btn);
+                hiphop.setBackgroundResource(R.drawable.my_genre_btn);
+                rock.setBackgroundResource(R.drawable.my_genre_not_btn);
+                onResume();
+            }
+        });
+
+        rock.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                flag = "락";
+                dance.setBackgroundResource(R.drawable.my_genre_not_btn);
+                ballad.setBackgroundResource(R.drawable.my_genre_not_btn);
+                rnb.setBackgroundResource(R.drawable.my_genre_not_btn);
+                hiphop.setBackgroundResource(R.drawable.my_genre_not_btn);
+                rock.setBackgroundResource(R.drawable.my_genre_btn);
+                onResume();
+            }
+        });
+
+        rnb.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                flag = "알앤비";
+                dance.setBackgroundResource(R.drawable.my_genre_not_btn);
+                ballad.setBackgroundResource(R.drawable.my_genre_not_btn);
+                rnb.setBackgroundResource(R.drawable.my_genre_btn);
+                hiphop.setBackgroundResource(R.drawable.my_genre_not_btn);
+                rock.setBackgroundResource(R.drawable.my_genre_not_btn);
+                onResume();
+            }
+        });
+
+
+
+        return view;
     }
+
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
+
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
         }
+    }
+
+
+    public void onActivityCreated(Bundle b){
+        super.onActivityCreated(b);
+
+        lvMusicpick = getActivity().findViewById(R.id.lv_pick_music);
+
+        pickhelper = new DBhelper(getActivity());
+
+        musicPickList = new ArrayList<Music_list>();
+
+        pickadapter =  new MyCursorAdapter(getActivity(), null);
+        lvMusicpick.setAdapter(pickadapter);
+
+
+        lvMusicpick.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long id) {
+                final long realId = id;
+
+            } });
+
+
+    }
+
+
+    public static void get_reset() {
+        pickdb = pickhelper.getReadableDatabase();
+        pickcursor = pickdb.rawQuery("select * from " + pickhelper.TABLE_NAME +" where mGenre = '" + flag +"';" , null);
+
+        //커스텀 어댑터
+        pickadapter.changeCursor(pickcursor);
+
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+//        DB에서 데이터를 읽어와 Adapter에 설정
+        pickdb = pickhelper.getReadableDatabase();
+        pickcursor = pickdb.rawQuery("select * from " + pickhelper.TABLE_NAME +" where mGenre = '" + flag +"';" , null);
+
+        //커스텀 어댑터
+        pickadapter.changeCursor(pickcursor);
+
+//        pickhelper.close();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+//        cursor 사용 종료
+        if (pickcursor != null) pickcursor.close();
     }
 
 
@@ -110,4 +296,8 @@ public class MyPickFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
+
+
+
 }

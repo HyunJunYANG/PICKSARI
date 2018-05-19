@@ -8,7 +8,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
+
+import com.yapp.picksari.Adapter.ListViewAdapter;
+import com.yapp.picksari.Adapter.MyCursorAdapter;
+import com.yapp.picksari.DBHelper.DBhelper;
 import com.yapp.picksari.Item.musicItem;
 
 
@@ -46,9 +51,16 @@ public class HomeFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
 
     private static List<musicItem> item;
-    private static List<musicItem> dance_list, ballad_list, rnb_list, rock_list, hiphop_list;
+    public static List<musicItem> dance_list, ballad_list, rnb_list, rock_list, hiphop_list;
     private Button rnb, ballad, dance, rock, hiphop;
     private int id = 1;
+
+    // 새로
+    ListView listView;
+    public static ListViewAdapter myAdapter;
+    public static DBhelper myHelper;
+
+    ImageButton btnPick;
 
     public static HomeFragment newInstance(int position) {
         HomeFragment f = new HomeFragment();
@@ -118,69 +130,91 @@ public class HomeFragment extends Fragment {
         hiphop = (Button) view.findViewById(R.id.btn_hiphop);
         rock = (Button) view.findViewById(R.id.btn_rock);
 
+
+
+        myHelper = new DBhelper(this.getActivity());
+
+
         dance.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v){
-                ListView listView = (ListView) view.findViewById(R.id.lv_music);
-                listView.setAdapter(new ListViewAdapter(getActivity(), android.R.layout.activity_list_item, dance_list));
+
+                listView = (ListView) view.findViewById(R.id.lv_music);
+                myAdapter = new ListViewAdapter(getActivity(), android.R.layout.activity_list_item, dance_list);
+                listView.setAdapter(myAdapter);
+
                 dance.setBackgroundResource(R.drawable.my_genre_btn);
                 ballad.setBackgroundResource(R.drawable.my_genre_not_btn);
                 rnb.setBackgroundResource(R.drawable.my_genre_not_btn);
                 hiphop.setBackgroundResource(R.drawable.my_genre_not_btn);
                 rock.setBackgroundResource(R.drawable.my_genre_not_btn);
+                onResume();
             }
 
         });
 
+
         ballad.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ListView listView = (ListView) view.findViewById(R.id.lv_music);
-                listView.setAdapter(new ListViewAdapter(getActivity(), android.R.layout.activity_list_item, ballad_list));
+                listView = (ListView) view.findViewById(R.id.lv_music);
+                myAdapter = new ListViewAdapter(getActivity(), android.R.layout.activity_list_item, ballad_list);
+                listView.setAdapter(myAdapter);
+
                 ballad.setBackgroundResource(R.drawable.my_genre_btn);
                 dance.setBackgroundResource(R.drawable.my_genre_not_btn);
                 rnb.setBackgroundResource(R.drawable.my_genre_not_btn);
                 hiphop.setBackgroundResource(R.drawable.my_genre_not_btn);
                 rock.setBackgroundResource(R.drawable.my_genre_not_btn);
+                onResume();
             }
 
         });
         rnb.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ListView listView = (ListView) view.findViewById(R.id.lv_music);
-                listView.setAdapter(new ListViewAdapter(getActivity(), android.R.layout.activity_list_item, rnb_list));
+                listView = (ListView) view.findViewById(R.id.lv_music);
+                myAdapter = new ListViewAdapter(getActivity(), android.R.layout.activity_list_item, rnb_list);
+                listView.setAdapter(myAdapter);
+
                 rnb.setBackgroundResource(R.drawable.my_genre_btn);
                 ballad.setBackgroundResource(R.drawable.my_genre_not_btn);
                 dance.setBackgroundResource(R.drawable.my_genre_not_btn);
                 hiphop.setBackgroundResource(R.drawable.my_genre_not_btn);
                 rock.setBackgroundResource(R.drawable.my_genre_not_btn);
+                onResume();
             }
 
         });
         hiphop.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ListView listView = (ListView) view.findViewById(R.id.lv_music);
-                listView.setAdapter(new ListViewAdapter(getActivity(), android.R.layout.activity_list_item, hiphop_list));
+                listView = (ListView) view.findViewById(R.id.lv_music);
+                myAdapter = new ListViewAdapter(getActivity(), android.R.layout.activity_list_item, hiphop_list);
+                listView.setAdapter(myAdapter);
+
                 hiphop.setBackgroundResource(R.drawable.my_genre_btn);
                 ballad.setBackgroundResource(R.drawable.my_genre_not_btn);
                 rnb.setBackgroundResource(R.drawable.my_genre_not_btn);
                 dance.setBackgroundResource(R.drawable.my_genre_not_btn);
                 rock.setBackgroundResource(R.drawable.my_genre_not_btn);
+                onResume();
             }
 
         });
         rock.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ListView listView = (ListView) view.findViewById(R.id.lv_music);
-                listView.setAdapter(new ListViewAdapter(getActivity(), android.R.layout.activity_list_item, rock_list));
+                listView = (ListView) view.findViewById(R.id.lv_music);
+                myAdapter = new ListViewAdapter(getActivity(), android.R.layout.activity_list_item, rock_list);
+                listView.setAdapter(myAdapter);
+
                 rock.setBackgroundResource(R.drawable.my_genre_btn);
                 ballad.setBackgroundResource(R.drawable.my_genre_not_btn);
                 rnb.setBackgroundResource(R.drawable.my_genre_not_btn);
                 hiphop.setBackgroundResource(R.drawable.my_genre_not_btn);
                 dance.setBackgroundResource(R.drawable.my_genre_not_btn);
+                onResume();
             }
 
         });
@@ -188,7 +222,19 @@ public class HomeFragment extends Fragment {
         ListView listView = (ListView) view.findViewById(R.id.lv_music);
         listView.setAdapter(new ListViewAdapter(getActivity(), android.R.layout.activity_list_item, rnb_list));
 
+
         return view;
+    }
+
+    public static void get_reset() {
+
+
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event

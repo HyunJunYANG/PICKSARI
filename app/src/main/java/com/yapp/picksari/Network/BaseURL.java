@@ -5,7 +5,7 @@ package com.yapp.picksari.Network;
  */
 
 public class BaseURL {
-    private String url = "http://172.30.1.22:8080/";
+    private String url = "http:/ec2-13-125-181-226.ap-northeast-2.compute.amazonaws.com:8080/Picksari_war";
     public BaseURL(){
 
     }

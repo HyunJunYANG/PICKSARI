@@ -12,18 +12,21 @@ public class musicItem implements Parcelable{
     public String mSinger;
     public String mOctave;
     public String mGenre;
+    public int mPick;
 
-    public musicItem(String mName, String mSinger, String mOctave, String mGenre){
+    public musicItem(String mName, String mSinger, String mOctave, String mGenre, int mPick){
         this.mName = mName;
         this.mSinger = mSinger;
         this.mOctave = mOctave;
         this.mGenre = mGenre;
+        this.mPick = mPick;
     }
     public musicItem(Parcel in){
         mName = in.readString();
         mSinger = in.readString();
         mOctave = in.readString();
         mGenre = in.readString();
+        mPick = in.readInt();
     }
 
     public static final Creator<musicItem> CREATOR = new Creator<musicItem>() {
@@ -48,5 +51,6 @@ public class musicItem implements Parcelable{
         dest.writeString(mSinger);
         dest.writeString(mOctave);
         dest.writeString(mGenre);
+        dest.writeInt(mPick);
     }
 }

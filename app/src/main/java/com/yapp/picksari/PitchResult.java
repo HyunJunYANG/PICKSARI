@@ -1,6 +1,7 @@
 package com.yapp.picksari;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -20,7 +21,16 @@ public class PitchResult extends AppCompatActivity {
         @Override
         public void run() {
             Intent intent = new Intent(PitchResult.this, MainActivity.class);
-            intent.putExtra("scaleInfo", scaleInfo.toString());
+            intent.putExtra("scaleInfo", scaleInfo.toString()); // max 값
+            intent.putExtra("scaleInfotwo", lowScaleInfo.toString()); // min 값
+
+            SharedPreferences sharedpreferences = getSharedPreferences("Pref", MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+            editor.putString("scaleInfo", scaleInfo.toString());
+            editor.putString("scaleInfotwo", lowScaleInfo.toString());
+            editor.putBoolean("isFirst", false);
+            editor.apply();
+
             startActivity(intent);
             finish();
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out); //애니메이션처리

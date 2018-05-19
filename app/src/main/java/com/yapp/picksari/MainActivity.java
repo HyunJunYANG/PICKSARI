@@ -1,6 +1,7 @@
 package com.yapp.picksari;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
@@ -51,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         ImageView ivSearch = (ImageView)findViewById(R.id.iv_search);
         ivSearch.bringToFront();
         ImageView icon = (ImageView)findViewById(R.id.logo_image);
@@ -69,17 +71,75 @@ public class MainActivity extends AppCompatActivity {
             Log.d("MainActivity", "nulltext");
         }
         String scaleInfo = intent.getStringExtra("scaleInfo");
+        String scaleInfotwo = intent.getStringExtra("scaleInfotwo");
 
-//        mainText.setText(scaleInfo);
+        TextView egOctave_min = findViewById(R.id.egOctave_min);
+        TextView egOctave_max = findViewById(R.id.egOctave_max);
+        TextView krOctave_min = findViewById(R.id.krOctave_min);
+        TextView krOctave_max = findViewById(R.id.krOctave_max);
+
+//        egOctave_max.setText(scaleInfo);
+//        egOctave_min.setText(scaleInfotwo);
+
+        // 최고음 번역
+        if (scaleInfo.substring(3,4).equals("도")) {
+            egOctave_max.setText(scaleInfo.charAt(0) + "'C");
+        }
+        else if (scaleInfo.substring(3,4).equals("레")) {
+            egOctave_max.setText(scaleInfo.charAt(0) + "'D");
+        }
+        else if (scaleInfo.substring(3,4).equals("미")) {
+            egOctave_max.setText(scaleInfo.charAt(0) + "'E");
+        }
+        else if (scaleInfo.substring(3,4).equals("파")) {
+            egOctave_max.setText(scaleInfo.charAt(0) + "'F");
+        }
+        else if (scaleInfo.substring(3,4).equals("솔")) {
+            egOctave_max.setText(scaleInfo.charAt(0) + "'G");
+        }
+        else if (scaleInfo.substring(3,4).equals("라")) {
+            egOctave_max.setText(scaleInfo.charAt(0) + "'A");
+        }
+        else if (scaleInfo.substring(3,4).equals("시")) {
+            egOctave_max.setText(scaleInfo.charAt(0) + "'B");
+        }
+
+        // 최저음 번역
+        if (scaleInfotwo.substring(3,4).equals("도")) {
+            egOctave_min.setText(scaleInfotwo.charAt(0) + "'C");
+        }
+        else if (scaleInfotwo.substring(3,4).equals("레")) {
+            egOctave_min.setText(scaleInfotwo.charAt(0) + "'D");
+        }
+        else if (scaleInfotwo.substring(3,4).equals("미")) {
+            egOctave_min.setText(scaleInfotwo.charAt(0) + "'E");
+        }
+        else if (scaleInfotwo.substring(3,4).equals("파")) {
+            egOctave_min.setText(scaleInfotwo.charAt(0) + "'F");
+        }
+        else if (scaleInfotwo.substring(3,4).equals("솔")) {
+            egOctave_min.setText(scaleInfotwo.charAt(0) + "'G");
+        }
+        else if (scaleInfotwo.substring(3,4).equals("라")) {
+            egOctave_min.setText(scaleInfotwo.charAt(0) + "'A");
+        }
+        else if (scaleInfotwo.substring(3,4).equals("시")) {
+            egOctave_min.setText(scaleInfotwo.charAt(0) + "'B");
+        }
+
+        krOctave_max.setText(scaleInfo.charAt(0) + " 옥타브 " + scaleInfo.substring(3,4));
+        krOctave_min.setText(scaleInfotwo.charAt(0) + " 옥타브 " + scaleInfotwo.substring(3,4));
+
 
         handler = new Handler();
         bundle = new Bundle();
         f = new Fragment();
-//        String mOctave = "3\' 시";
+        String mOctave = "3\' 시";
 
         JSONObject jsonParam = new JSONObject();
         try {
-            jsonParam.put("mOctave", scaleInfo.toString());
+//            jsonParam.put("mOctave", scaleInfo.toString());
+            jsonParam.put("mOctave", mOctave);
 //            jsonParam.put("mGenre", mGenre.toString());
         } catch (JSONException e) {
             // TODO Auto-generated catch block
@@ -123,15 +183,15 @@ public class MainActivity extends AppCompatActivity {
                 String mGenre = jk.getString("mGenre");
 
                 if(mGenre.equals("댄스"))
-                    dance_list.add(new musicItem(mName, mSinger,mOctave, mGenre));
+                    dance_list.add(new musicItem(mName, mSinger,mOctave, mGenre, 0));
                 else if(mGenre.equals("발라드"))
-                    ballad_list.add(new musicItem(mName, mSinger,mOctave, mGenre));
+                    ballad_list.add(new musicItem(mName, mSinger,mOctave, mGenre, 0));
                 else if(mGenre.equals("R&B"))
-                    rnb_list.add(new musicItem(mName, mSinger,mOctave, mGenre));
+                    rnb_list.add(new musicItem(mName, mSinger,mOctave, mGenre, 0));
                 else if(mGenre.equals("힙합"))
-                    hiphop_list.add(new musicItem(mName, mSinger,mOctave, mGenre));
+                    hiphop_list.add(new musicItem(mName, mSinger,mOctave, mGenre, 0));
                 else if(mGenre.equals("락"))
-                    rock_list.add(new musicItem(mName, mSinger,mOctave, mGenre));
+                    rock_list.add(new musicItem(mName, mSinger,mOctave, mGenre, 0));
             }
         }
         catch (JSONException e) {

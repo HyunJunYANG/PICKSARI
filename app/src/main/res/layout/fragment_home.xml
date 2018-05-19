@@ -35,7 +35,6 @@
             android:layout_height="25dp"
             android:layout_weight="1"
             android:background="@drawable/my_genre_btn"
-            android:onClick="onClick"
             android:text="@string/genre1"
             android:textColor="#ababab" />
 
@@ -65,7 +64,7 @@
             android:layout_weight="1"
             android:background="@drawable/my_genre_not_btn"
             android:text="dance"
-            android:textColor="#ababab" />
+            android:textColor="#ababab"/>
 
 
         <Space
@@ -95,7 +94,7 @@
             android:layout_weight="1"
             android:background="@drawable/my_genre_not_btn"
             android:text="rock"
-            android:textColor="#ababab" />
+            android:textColor="#ababab"/>
 
     </LinearLayout>
 
@@ -104,6 +103,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentEnd="true"
-        android:layout_below="@id/layout_one" />
+        android:layout_below="@id/layout_one"
+        android:descendantFocusability="blocksDescendants"/>
 
 </RelativeLayout>

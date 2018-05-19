@@ -138,13 +138,13 @@
         android:id="@+id/krOctave_min"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="1옥타브 미"
-        android:textSize="12sp"
-        android:textColor="#3e3e3e"
-        app:layout_constraintRight_toLeftOf="@id/logo_image"
-        app:layout_constraintTop_toBottomOf="@id/egOctave_min"
+        android:layout_marginRight="26dp"
         android:layout_marginTop="1dp"
-        android:layout_marginRight="26dp"/>
+        android:text="1옥타브 미"
+        android:textColor="#3e3e3e"
+        android:textSize="12sp"
+        app:layout_constraintRight_toLeftOf="@id/logo_image"
+        app:layout_constraintTop_toBottomOf="@id/egOctave_min" />
 
     <TextView
         android:id="@+id/egOctave_max"
