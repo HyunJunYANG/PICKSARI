@@ -227,7 +227,7 @@ public class HomeFragment extends Fragment {
     }
 
     public static void get_reset() {
-
+        myAdapter.notifyDataSetChanged();
 
     }
     @Override

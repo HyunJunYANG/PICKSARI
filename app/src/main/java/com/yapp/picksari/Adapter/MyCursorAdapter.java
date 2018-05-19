@@ -3,6 +3,7 @@ package com.yapp.picksari.Adapter;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
@@ -10,23 +11,29 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.CursorAdapter;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.yapp.picksari.DBHelper.DBhelper;
 import com.yapp.picksari.HomeFragment;
+import com.yapp.picksari.Item.musicItem;
 import com.yapp.picksari.MainActivity;
 import com.yapp.picksari.Music.Music_list;
 import com.yapp.picksari.MyPickFragment;
 import com.yapp.picksari.R;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import static android.support.v4.content.ContextCompat.startActivity;
 
 /**
  * Created by dain on 2017-09-24.
@@ -56,7 +63,7 @@ public class MyCursorAdapter extends CursorAdapter {
     }
 
     @Override
-    public void bindView(View view, Context context, Cursor cursor) {
+    public void bindView(View view, Context context, final Cursor cursor) {
         TextView tvTitle = view.findViewById(R.id.tvTitle);
         TextView tvSinger = view.findViewById(R.id.tvSinger);
         Button tvGenre = view.findViewById(R.id.tvGenre);
@@ -64,12 +71,12 @@ public class MyCursorAdapter extends CursorAdapter {
 
         tvTitle.setTextColor(Color.parseColor("#FFFFFF"));
 
+        final int realId = cursor.getInt(0);
         tvTitle.setText(cursor.getString(1));
         tvSinger.setText(cursor.getString(2));
         tvGenre.setText(cursor.getString(3));
         tvOctave.setText(cursor.getString(4));
 
-        final int realId = cursor.getInt(0);
 
         musichelper = MyPickFragment.myHelper;
         musicdb = musichelper.getReadableDatabase();
@@ -82,6 +89,17 @@ public class MyCursorAdapter extends CursorAdapter {
 
             @Override
             public void onClick(View view) {
+                // 마이픽에서 하트를 다시 누르면 홈에서 바로 하트 색 바꾸기 위해서
+                // mPick은 listviewadapter 에서 position을 의미
+                Cursor cursor2 = musicdb.rawQuery("SELECT mPick FROM " + musichelper.TABLE_NAME + " WHERE _id = "+ realId +";", null);
+
+                while (cursor2.moveToNext()) {
+                    List<musicItem> items = ListViewAdapter.items;
+                    final musicItem music = items.get(cursor2.getInt(0));
+                    music.mPick = 0; // 0으로 바꿔주면 홈에서 하트 색 바뀜
+
+                }
+
 
                 btnPick.setImageAlpha(R.drawable.ic_search_heart_lightgray);
 
@@ -90,6 +108,9 @@ public class MyCursorAdapter extends CursorAdapter {
                 MyPickFragment.myAdapter.notifyDataSetChanged();
 
                 MyPickFragment.get_reset();
+                HomeFragment.get_reset();
+
+
             }
         });
     }

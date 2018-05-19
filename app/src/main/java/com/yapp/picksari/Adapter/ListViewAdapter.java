@@ -27,15 +27,19 @@ import com.yapp.picksari.R;
 
 import java.util.List;
 
+import static com.yapp.picksari.Adapter.MyCursorAdapter.musicdb;
+
 /**
  * Created by myeong on 2018. 4. 2..
  */
 
 public class ListViewAdapter extends ArrayAdapter<musicItem>{
 
-    private List<musicItem> items;
-    ImageButton btnPick;
-    int flag = -1;
+    public static List<musicItem> items;
+    static ImageButton btnPick;
+    int realPosition = 0;
+     static SQLiteDatabase musicdb;
+     static DBhelper musichelper;
 
     public ListViewAdapter(Context context, int textViewResourceId) {
         super(context,textViewResourceId);
@@ -60,6 +64,8 @@ public class ListViewAdapter extends ArrayAdapter<musicItem>{
             view = vi.inflate(R.layout.activity_listview, null);
         }
 
+        realPosition = position;
+
         Button genre = (Button) view.findViewById(R.id.tvGenre);
         Button octave = (Button) view.findViewById(R.id.tvOctave);
         TextView title = (TextView) view.findViewById(R.id.tvTitle);
@@ -76,50 +82,59 @@ public class ListViewAdapter extends ArrayAdapter<musicItem>{
 
         btnPick = (ImageButton)view.findViewById(R.id.btnPick);
 
-        Cursor cursor = musicdb.rawQuery("SELECT _id FROM " + musichelper.TABLE_NAME + " WHERE mName='" +  music.mName + "' AND mSinger='" + music.mSinger + "';", null);
+
+        // 시작 시 노란 하트로 보이게 하려고 디비에서 불러옴
+        Cursor cursor = musicdb.rawQuery("SELECT mName, mSinger FROM " + musichelper.TABLE_NAME + ";", null);
 
         while (cursor.moveToNext()) {
-            if (cursor.getInt(0) != -1) {
+            if (cursor.getString(0).equals(music.mName) && cursor.getString(1).equals(music.mSinger)) {
                 btnPick.setImageResource(R.drawable.ic_heart_symbol_yellow);
-                flag = cursor.getInt(0);
+                music.mPick = 1;
             }
         }
+
+        // 하트 누르자마자 리스트뷰 바로 갱신하기 위해서
+        if (music.mPick == 1) {
+            btnPick.setImageResource(R.drawable.ic_heart_symbol_yellow);
+        }
+        if (music.mPick == 0) {
+            btnPick.setImageResource(R.drawable.ic_search_heart_lightgray);
+        }
+
 
         btnPick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // 하트 클릭시 db에 추가
-
-                if (flag == -1) {
-                    btnPick.setImageResource(R.drawable.ic_heart_symbol_yellow);
+                if (music.mPick == 0) {
+                    btnPick.setImageAlpha(R.drawable.ic_heart_symbol_yellow);
 
                     ContentValues row = new ContentValues();
                     row.put("mName", music.mName);
                     row.put("mSinger", music.mSinger);
                     row.put("mGenre", music.mGenre);
                     row.put("mOctave", music.mOctave);
-                    row.put("mPick", 1);
+                    row.put("mPick", getPosition(music)); // 홈 리스트의 실제 위치 정보 저장
 
                     musicdb.insert(musichelper.TABLE_NAME, null, row);
                     MyPickFragment.myAdapter.notifyDataSetChanged();
 
+                    HomeFragment.get_reset();
                     MyPickFragment.get_reset();
 
-                    // 바로 바뀌어야 함
-
-
-
+                    music.mPick = 1;
                 }
-                else {
+                else if (music.mPick == 1){
+                    // 하트 클릭시 db에서 삭제
                     btnPick.setImageAlpha(R.drawable.ic_search_heart_lightgray);
 
-                    // 하트 클릭시 db에서 삭제
-                    musicdb.execSQL("DELETE FROM " + musichelper.TABLE_NAME + " WHERE _id = " + flag + ";");
+                    musicdb.execSQL("DELETE FROM " + musichelper.TABLE_NAME + " WHERE mName = '" + music.mName + "' AND mSinger = '" + music.mSinger + "';");
                     MyPickFragment.myAdapter.notifyDataSetChanged();
 
+                    HomeFragment.get_reset();
                     MyPickFragment.get_reset();
 
-                    // 바뀌어야 함
+                    music.mPick = 0;
                 }
             }
         });
