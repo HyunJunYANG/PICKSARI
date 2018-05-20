@@ -130,7 +130,6 @@
         android:id="@+id/piano"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/piano"
-        android:scaleType="fitXY"/>
+        android:src="@drawable/piano" />
 
 </LinearLayout>

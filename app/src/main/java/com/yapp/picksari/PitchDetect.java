@@ -32,7 +32,7 @@ public class PitchDetect extends AppCompatActivity {
 
     static String LOG_TAG="PitchDetect";
     static int highPitchStart = 15;
-    static int lowPitchStart = 8;
+    static int lowPitchStart = 10;
     final String[] scale = {"","0\' 도","0\' 레","0\' 미","0\' 파","0\' 솔","0\' 라","0\' 시",
             "1\' 도","1\' 레","1\' 미","1\' 파","1\' 솔","1\' 라","1\' 시",
             "2\' 도","2\' 레","2\' 미","2\' 파","2\' 솔","2\' 라","2\' 시",
@@ -76,13 +76,11 @@ public class PitchDetect extends AppCompatActivity {
 
     SoundPool soundPool;
     int soundId;
-    final int soundList[] = {R.raw.testsound1, R.raw.testsound8, R.raw.testsound1, R.raw.testsound8, R.raw.testsound1, R.raw.testsound8,
-            R.raw.testsound1, R.raw.testsound8, R.raw.testsound1, R.raw.testsound8, R.raw.testsound1, R.raw.testsound8,
-            R.raw.testsound1, R.raw.testsound8, R.raw.testsound1, R.raw.testsound8, R.raw.testsound1, R.raw.testsound8,
-            R.raw.testsound1, R.raw.testsound8, R.raw.testsound1, R.raw.testsound8, R.raw.testsound1, R.raw.testsound8,
-            R.raw.testsound1, R.raw.testsound8, R.raw.testsound1, R.raw.testsound8, R.raw.testsound1, R.raw.testsound8,
-            R.raw.testsound1, R.raw.testsound8, R.raw.testsound1, R.raw.testsound8, R.raw.testsound1, R.raw.testsound8,
-            R.raw.testsound1, R.raw.testsound8, R.raw.testsound1, R.raw.testsound8, R.raw.testsound1, R.raw.testsound8};
+    final int soundList[] = {R.raw.piano_016, R.raw.piano_016, R.raw.piano_018, R.raw.piano_020, R.raw.piano_021, R.raw.piano_023, R.raw.piano_025, R.raw.piano_027,
+            R.raw.piano_028, R.raw.piano_030, R.raw.piano_032, R.raw.piano_033, R.raw.piano_035, R.raw.piano_037, R.raw.piano_039,
+            R.raw.piano_040, R.raw.piano_042, R.raw.piano_044, R.raw.piano_045, R.raw.piano_047, R.raw.piano_049, R.raw.piano_051,
+            R.raw.piano_052, R.raw.piano_054, R.raw.piano_056, R.raw.piano_057, R.raw.piano_059, R.raw.piano_061, R.raw.piano_063,
+            R.raw.piano_064, R.raw.piano_064, R.raw.piano_064, R.raw.piano_064, R.raw.piano_064, R.raw.piano_064, R.raw.piano_064, R.raw.piano_064};
     int soundIndex = 8;
 
     ProgressBar progressBar;
@@ -94,6 +92,8 @@ public class PitchDetect extends AppCompatActivity {
             //Log.d(LOG_TAG,"pitchSuccessChange");
             soundPool.play(soundId,1.0F, 1.0F,  1,  0,  1.0F);
             manPicture.setImageResource(R.drawable.man_2);
+            topLayout.setVisibility(View.VISIBLE);
+            waitLayout.setVisibility(View.GONE);
             Handler flagChangeHandler = new Handler();
             flagChangeHandler.postDelayed(new Runnable() {
                 @Override
@@ -187,12 +187,21 @@ public class PitchDetect extends AppCompatActivity {
 
                             if(failFlag == 0) {
                                 failFlag = 1;
+                                topLayout.setVisibility(View.GONE);
+                                waitLayout.setVisibility(View.VISIBLE);
+                                waitStartBox.setVisibility(View.VISIBLE);
+                                changeTextView.setVisibility(View.VISIBLE);
+                                changeTextView.bringToFront();
+                                changeTextView.setText("음이 맞지 않소.\n다시 한 번 소리 내주시오.");
                                 Handler nextChanceHandler = new Handler();
                                 nextChanceHandler.postDelayed(new Runnable() {
                                     @Override
                                     public void run() {
                                         pitchDetectFlag = 0;
+                                        topLayout.setVisibility(View.VISIBLE);
+                                        waitLayout.setVisibility(View.GONE);
                                         manPicture.setImageResource(R.drawable.man_2);
+                                        //soundPool.play(soundId,1.0F, 1.0F,  1,  0,  1.0F);
                                         pitchText.setTextColor(Color.parseColor("#ffe000"));
                                     }
                                 },1000);
@@ -231,6 +240,7 @@ public class PitchDetect extends AppCompatActivity {
                                                 pitchText.setText(scale[scaleIndex]);
                                                 pitchText.setTextColor(Color.parseColor("#ffe000"));
 
+
                                                 soundPool.play(soundId,1.0F, 1.0F,  1,  0,  1.0F);
                                                 Handler flagChangeHandler = new Handler();
                                                 flagChangeHandler.postDelayed(new Runnable() {
@@ -246,12 +256,21 @@ public class PitchDetect extends AppCompatActivity {
 
                             } else if(failFlag == 2) {
                                 failFlag = 3;
+                                topLayout.setVisibility(View.GONE);
+                                waitLayout.setVisibility(View.VISIBLE);
+                                waitStartBox.setVisibility(View.VISIBLE);
+                                changeTextView.setVisibility(View.VISIBLE);
+                                changeTextView.bringToFront();
+                                changeTextView.setText("음이 맞지 않소.\n다시 한 번 소리 내주시오.");
                                 Handler nextChanceHandler = new Handler();
                                 nextChanceHandler.postDelayed(new Runnable() {
                                     @Override
                                     public void run() {
                                         pitchDetectFlag = 0;
+                                        topLayout.setVisibility(View.VISIBLE);
+                                        waitLayout.setVisibility(View.GONE);
                                         manPicture.setImageResource(R.drawable.man_2);
+                                        //soundPool.play(soundId,1.0F, 1.0F,  1,  0,  1.0F);
                                         pitchText.setTextColor(Color.parseColor("#ffe000"));
                                     }
                                 },1000);
@@ -343,7 +362,7 @@ public class PitchDetect extends AppCompatActivity {
             @Override
             public void handlePitch(PitchDetectionResult result, AudioEvent e) {
                 //final float pitchInHz = result.getPitch();
-                if(scaleIndex == 0 || scaleIndex == 36) {
+                if(scaleIndex == 0 || scaleIndex == 29) { //4옥타브까지 하려면 36
                     Handler handler = new Handler();
                     //1초 딜레이
                     handler.postDelayed(new Runnable() {
@@ -390,6 +409,12 @@ public class PitchDetect extends AppCompatActivity {
 
                                     pitchDetectFlag = 1;
                                     manPicture.setImageResource(R.drawable.man_3);
+                                    topLayout.setVisibility(View.GONE);
+                                    waitLayout.setVisibility(View.VISIBLE);
+                                    waitStartBox.setVisibility(View.VISIBLE);
+                                    changeTextView.setVisibility(View.VISIBLE);
+                                    changeTextView.bringToFront();
+                                    changeTextView.setText("잘 하고 있소.\n당신의 음정은 완벽하군.");
                                     //PostDelay 그림을 바꾸기 위한 딜레이
                                     try {
                                         Log.d(LOG_TAG, "ThreadSleepStart");
@@ -432,6 +457,12 @@ public class PitchDetect extends AppCompatActivity {
 
                                     pitchDetectFlag = 1;
                                     manPicture.setImageResource(R.drawable.man_3);
+                                    topLayout.setVisibility(View.GONE);
+                                    waitLayout.setVisibility(View.VISIBLE);
+                                    waitStartBox.setVisibility(View.VISIBLE);
+                                    changeTextView.setVisibility(View.VISIBLE);
+                                    changeTextView.bringToFront();
+                                    changeTextView.setText("잘 하고 있소.\n당신의 음정은 완벽하군.");
                                     //PostDelay 그림을 바꾸기 위한 딜레이
                                     try {
                                         Log.d(LOG_TAG, "ThreadSleepStart");
