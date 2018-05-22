@@ -71,21 +71,21 @@ public class PitchResult extends AppCompatActivity {
             case "2\' 미":
             case "2\' 파":
             case "2\' 솔":
-            case "2\' 라":
-            case "2\' 시":
                 resultImage.setImageResource(R.drawable.cow_image);
                 mainText.setText("당신의 음역대는 " + lowScaleInfo + "~" + scaleInfo + "\n묵직한 소와 같아!");
                 break;
+            case "2\' 라":
+            case "2\' 시":
             case "3\' 도":
             case "3\' 레":
+                resultImage.setImageResource(R.drawable.bird_image);
+                mainText.setText("당신의 음역대는 " + lowScaleInfo + "~" + scaleInfo + "\n꾀꼬리같은 음역대를 가졌군!");
+                break;
             case "3\' 미":
             case "3\' 파":
             case "3\' 솔":
             case "3\' 라":
             case "3\' 시":
-                resultImage.setImageResource(R.drawable.bird_image);
-                mainText.setText("당신의 음역대는 " + lowScaleInfo + "~" + scaleInfo + "\n꾀꼬리같은 음역대를 가졌군!");
-                break;
             case "4\' 도":
             case "4\' 레":
             case "4\' 미":

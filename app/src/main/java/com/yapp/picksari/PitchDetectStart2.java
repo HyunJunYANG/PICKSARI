@@ -9,7 +9,10 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class PitchDetectStart2 extends AppCompatActivity {
 
@@ -43,43 +46,51 @@ public class PitchDetectStart2 extends AppCompatActivity {
         //권한 설정
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO)!= PackageManager.PERMISSION_GRANTED) {
             if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.RECORD_AUDIO)) {
-
-            } else {
-
+                Toast toast = Toast.makeText(getApplicationContext(),"음역대를\n측정하기 위한 권한입니다.", Toast.LENGTH_LONG);
+                ViewGroup viewGroup = (ViewGroup)toast.getView();
+                TextView textView = (TextView)viewGroup.getChildAt(0);
+                textView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                toast.show();
                 ActivityCompat.requestPermissions(this,
                         new String[]{Manifest.permission.RECORD_AUDIO},
                         MY_PERMISSIONS_REQUEST_RECORD_AUDIO);
+
+            } else {
+                ActivityCompat.requestPermissions(this,
+                            new String[]{Manifest.permission.RECORD_AUDIO},
+                            MY_PERMISSIONS_REQUEST_RECORD_AUDIO);
+
             }
+        } else {
+            handler = new Handler();
+            nextTextHandler1 = new Handler();
+            nextTextHandler2 = new Handler();
+            nextTextHandler3 = new Handler();
+            nextTextHandler1.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    textView.setText("긴말않고 당신의\n 음역대를 측정해보도록 하지.");
+                    nextTextHandler2.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            textView.setText("우선\n 당신의 최저음부터 알아보겠소.");
+                            nextTextHandler3.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    textView.setText("조용한 장소에서\n들리는 음을 따라 소리내주시오.");
+                                    handler.postDelayed(runnable, 2000); //2초 지연
+                                }
+                            },2000);
+                        }
+                    },2000);
+                }
+            },2000);
         }
 
         textView = findViewById(R.id.startTextView);
         textView.bringToFront();
         textView.setText("어서오시게,\n Picksari에 온 것을 환영하오.");
         //textView.setText("당신’의 음역대를 \n측정 해보겠소.");
-
-        handler = new Handler();
-        nextTextHandler1 = new Handler();
-        nextTextHandler2 = new Handler();
-        nextTextHandler3 = new Handler();
-        nextTextHandler1.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                textView.setText("긴말않고 당신의\n 음역대를 측정해보도록 하지.");
-                nextTextHandler2.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        textView.setText("우선\n 당신의 최저음부터 알아보겠소.");
-                        nextTextHandler3.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                textView.setText("조용한 장소에서\n들리는 음을 따라 소리내주시오.");
-                                handler.postDelayed(runnable, 2000); //2초 지연
-                            }
-                        },2000);
-                    }
-                },2000);
-            }
-        },2000);
 
     }
 
@@ -94,9 +105,46 @@ public class PitchDetectStart2 extends AppCompatActivity {
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // 권한 허가
                     // 해당 권한을 사용해서 작업을 진행할 수 있습니다
+                    handler = new Handler();
+                    nextTextHandler1 = new Handler();
+                    nextTextHandler2 = new Handler();
+                    nextTextHandler3 = new Handler();
+                    nextTextHandler1.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            textView.setText("긴말않고 당신의\n 음역대를 측정해보도록 하지.");
+                            nextTextHandler2.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    textView.setText("우선\n 당신의 최저음부터 알아보겠소.");
+                                    nextTextHandler3.postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            textView.setText("조용한 장소에서\n들리는 음을 따라 소리내주시오.");
+                                            handler.postDelayed(runnable, 2000); //2초 지연
+                                        }
+                                    },2000);
+                                }
+                            },2000);
+                        }
+                    },2000);
+
                 } else {
                     // 권한 거부
                     // 사용자가 해당권한을 거부했을때 해주어야 할 동작을 수행합니다
+                    Toast toast = Toast.makeText(getApplicationContext(),"Audio 사용을 거부하여\n음역대를 측정할 수 없습니다.", Toast.LENGTH_LONG);
+                    ViewGroup viewGroup = (ViewGroup)toast.getView();
+                    TextView textView = (TextView)viewGroup.getChildAt(0);
+                    textView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                    toast.show();
+
+                    Handler exitHandler = new Handler();
+                    exitHandler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            finish();
+                        }
+                    },2000);
                 }
                 return;
         }
