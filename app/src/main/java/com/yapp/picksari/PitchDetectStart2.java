@@ -94,7 +94,7 @@ public class PitchDetectStart2 extends AppCompatActivity {
 
     }
 
-    //첫 권한 설정에서 아니요를 누른 경우
+    //권한 설정에서 아니요를 누른 경우
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            String permissions[], int[] grantResults) {

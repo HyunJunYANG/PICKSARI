@@ -1,12 +1,14 @@
 package com.yapp.picksari;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 public class PitchDetectStart extends AppCompatActivity {
 
@@ -22,6 +24,16 @@ public class PitchDetectStart extends AppCompatActivity {
         getWindow().addFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         startImage = findViewById(R.id.StartImage);
+        TextView gpl = findViewById(R.id.gpl);
+
+        gpl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Uri uri = Uri.parse("https://www.gnu.org/licenses/gpl-3.0.html");
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
+            }
+        });
 
         //터치리스너, 누르면 색이 변하고 떼면 넘어감
         startImage.setOnTouchListener(new View.OnTouchListener() {
