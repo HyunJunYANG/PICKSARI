@@ -40,7 +40,8 @@
         <activity
             android:name=".SearchActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name=".MusicInesertActivity"></activity>
+        <activity android:name=".MusicInesertActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" ></activity>
     </application>
 
 </manifest>
