@@ -136,6 +136,7 @@ public class ListViewAdapter extends ArrayAdapter<musicItem>{
 
                     music.mPick = 0;
                 }
+                notifyDataSetChanged();
             }
         });
 

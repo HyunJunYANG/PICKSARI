@@ -1,5 +1,6 @@
 package com.yapp.picksari;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -11,11 +12,11 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
+import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
 import com.yapp.picksari.Adapter.ListViewAdapter;
-import com.yapp.picksari.Adapter.MyCursorAdapter;
 import com.yapp.picksari.DBHelper.DBhelper;
 import com.yapp.picksari.Item.musicItem;
-
 
 import java.util.ArrayList;
 import java.util.List;
@@ -123,13 +124,33 @@ public class HomeFragment extends Fragment {
 
         final View view = inflater.inflate(R.layout.fragment_home, container, false);
 
+        FloatingActionMenu menu = (FloatingActionMenu)view.findViewById(R.id.menu);
+        FloatingActionButton menu1 = (FloatingActionButton)view.findViewById(R.id.menu_item) ;
+        FloatingActionButton menu2 = (FloatingActionButton)view.findViewById(R.id.menu_item2);
+        menu.bringToFront();
+
+        menu1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(),PitchDetectStart.class);
+                startActivity(intent);
+            }
+        });
+
+        menu2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(),MusicInesertActivity.class);
+                startActivity(intent);
+            }
+        });
+
         dance = (Button) view.findViewById(R.id.btn_dance);
         ballad = (Button) view.findViewById(R.id.btn_ballad);
         rnb = (Button) view.findViewById(R.id.btn_rnb);
         dance = (Button) view.findViewById(R.id.btn_dance);
         hiphop = (Button) view.findViewById(R.id.btn_hiphop);
         rock = (Button) view.findViewById(R.id.btn_rock);
-
 
 
         myHelper = new DBhelper(this.getActivity());
@@ -221,7 +242,6 @@ public class HomeFragment extends Fragment {
 
         ListView listView = (ListView) view.findViewById(R.id.lv_music);
         listView.setAdapter(new ListViewAdapter(getActivity(), android.R.layout.activity_list_item, rnb_list));
-
 
         return view;
     }
