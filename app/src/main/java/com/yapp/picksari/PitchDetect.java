@@ -31,14 +31,14 @@ import be.tarsos.dsp.pitch.PitchProcessor;
 public class PitchDetect extends AppCompatActivity {
 
     static String LOG_TAG="PitchDetect";
-    static int highPitchStart = 15;
-    static int lowPitchStart = 10;
-    final String[] scale = {"","0\' 도","0\' 레","0\' 미","0\' 파","0\' 솔","0\' 라","0\' 시",
+    static int highPitchStart = 16;
+    static int lowPitchStart = 11;
+    final String[] scale = {"0\' 도","0\' 도","0\' 도","0\' 레","0\' 미","0\' 파","0\' 솔","0\' 라","0\' 시",
             "1\' 도","1\' 레","1\' 미","1\' 파","1\' 솔","1\' 라","1\' 시",
             "2\' 도","2\' 레","2\' 미","2\' 파","2\' 솔","2\' 라","2\' 시",
             "3\' 도","3\' 레","3\' 미","3\' 파","3\' 솔","3\' 라","3\' 시",
             "4\' 도","4\' 레","4\' 미","4\' 파","4\' 솔","4\' 라","4\' 시",""};
-    final float[] hz = {1f, 65.41f, 73.42f, 82.41f, 87.31f, 98.00f, 110.00f, 123.47f,
+    final float[] hz = {1f, 1f, 65.41f, 73.42f, 82.41f, 87.31f, 98.00f, 110.00f, 123.47f,
             130.81f, 146.83f, 164.81f, 174.61f, 196f, 220f, 246.94f,
             261.63f, 293.66f, 329.63f, 349.23f, 392f, 440f, 493.88f,
             523.25f, 587.33f, 659.25f, 698.46f, 783.99f, 880f, 987.77f,
@@ -76,7 +76,7 @@ public class PitchDetect extends AppCompatActivity {
 
     SoundPool soundPool;
     int soundId;
-    final int soundList[] = {R.raw.piano_016, R.raw.piano_016, R.raw.piano_018, R.raw.piano_020, R.raw.piano_021, R.raw.piano_023, R.raw.piano_025, R.raw.piano_027,
+    final int soundList[] = {R.raw.piano_016, R.raw.piano_016, R.raw.piano_016, R.raw.piano_018, R.raw.piano_020, R.raw.piano_021, R.raw.piano_023, R.raw.piano_025, R.raw.piano_027,
             R.raw.piano_028, R.raw.piano_030, R.raw.piano_032, R.raw.piano_033, R.raw.piano_035, R.raw.piano_037, R.raw.piano_039,
             R.raw.piano_040, R.raw.piano_042, R.raw.piano_044, R.raw.piano_045, R.raw.piano_047, R.raw.piano_049, R.raw.piano_051,
             R.raw.piano_052, R.raw.piano_054, R.raw.piano_056, R.raw.piano_057, R.raw.piano_059, R.raw.piano_061, R.raw.piano_063,
@@ -362,7 +362,8 @@ public class PitchDetect extends AppCompatActivity {
             @Override
             public void handlePitch(PitchDetectionResult result, AudioEvent e) {
                 //final float pitchInHz = result.getPitch();
-                if(scaleIndex == 0 || scaleIndex == 29) { //4옥타브까지 하려면 36
+                if(scaleIndex == 1 || scaleIndex == 30) { //4옥타브까지 하려면 37
+/*
                     Handler handler = new Handler();
                     //1초 딜레이
                     handler.postDelayed(new Runnable() {
@@ -374,7 +375,14 @@ public class PitchDetect extends AppCompatActivity {
                             startActivity(intent);
                             System.exit(0);
                         }
-                    },1000);
+                    },500);
+                    */
+                    Intent intent = new Intent(PitchDetect.this, PitchResult.class); // 수정
+                    intent.putExtra("scaleInfo", pitchText.getText().toString());
+                    intent.putExtra("lowScaleInfo", lowScale);
+                    startActivity(intent);
+                    System.exit(0);
+
                 }
                 if(pitchDetectFlag == 0) {
                     pitchInHz = result.getPitch();

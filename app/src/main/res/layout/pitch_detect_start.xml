@@ -23,4 +23,21 @@
         android:visibility="gone"
         />
 
+    <TextView
+        android:id="@+id/gpl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="GPL 3.0"
+        android:textColor="#696969"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"/>
+    <TextView
+        android:id="@+id/library"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="This application uses TarsosDSP"
+        android:textColor="#696969"
+        android:layout_above="@id/gpl"
+        android:layout_centerHorizontal="true"/>
+
 </RelativeLayout>
