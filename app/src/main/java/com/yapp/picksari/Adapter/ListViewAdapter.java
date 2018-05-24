@@ -120,7 +120,7 @@ public class ListViewAdapter extends ArrayAdapter<musicItem>{
                     MyPickFragment.myAdapter.notifyDataSetChanged();
 
                     //HomeFragment.get_reset();
-                    //MyPickFragment.get_reset();
+                    MyPickFragment.get_reset();
 
                     music.mPick = 1;
                 }
@@ -132,14 +132,13 @@ public class ListViewAdapter extends ArrayAdapter<musicItem>{
                     MyPickFragment.myAdapter.notifyDataSetChanged();
 
                     //HomeFragment.get_reset();
-                    //MyPickFragment.get_reset();
+                    MyPickFragment.get_reset();
 
                     music.mPick = 0;
                 }
                 notifyDataSetChanged();
             }
         });
-
 
         return view;
     }

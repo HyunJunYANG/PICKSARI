@@ -103,13 +103,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/layout_two"
-        android:layout_marginBottom="30dp">
-
-        <ListView
+        android:layout_marginBottom="30dp"
+        android:nestedScrollingEnabled="true">
+            <ListView
             android:id="@+id/lv_pick_music"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:descendantFocusability="blocksDescendants"/>
+            android:descendantFocusability="blocksDescendants"
+            android:scrollbarAlwaysDrawVerticalTrack="true"
+            android:nestedScrollingEnabled="true"/>
 
         <com.github.clans.fab.FloatingActionMenu
             android:id="@+id/menu"

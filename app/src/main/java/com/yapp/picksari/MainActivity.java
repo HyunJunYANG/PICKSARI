@@ -249,7 +249,7 @@ public class MainActivity extends AppCompatActivity {
         public android.support.v4.app.Fragment getItem(int position) {
             switch(position){
                 case 0:{
-                    return HomeFragment.newInstance(position, list, dance_list, ballad_list, hiphop_list, rock_list);
+                    return HomeFragment.newInstance(position, rnb_list, dance_list, ballad_list, hiphop_list, rock_list);
                 }
                 case 1:{
                     return MyPickFragment.newInstance(position);
