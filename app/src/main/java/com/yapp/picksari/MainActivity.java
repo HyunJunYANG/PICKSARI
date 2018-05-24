@@ -12,10 +12,14 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.astuetz.PagerSlidingTabStrip;
+import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
 import com.yapp.picksari.Item.musicItem;
 import com.yapp.picksari.Network.SendPost;
 
@@ -52,8 +56,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         ImageView ivSearch = (ImageView)findViewById(R.id.iv_search);
+        EditText etSearch = (EditText)findViewById(R.id.et_search);
         ivSearch.bringToFront();
         ImageView icon = (ImageView)findViewById(R.id.logo_image);
         icon.bringToFront();
@@ -61,17 +65,38 @@ public class MainActivity extends AppCompatActivity {
         pager = (ViewPager) findViewById(R.id.pager);
         tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
 
-//안꺼지게
+
+        //검색창이나 검색버튼(돋보기모양) 누르면 SearchActivity로 전환
+        final Intent searchintent = new Intent(this, SearchActivity.class);
+        ivSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(searchintent);
+            }
+        });
+        etSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(searchintent);
+            }
+        });
+
+        //안꺼지게
         getWindow().addFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         TextView mainText = findViewById(R.id.mainText);
 
-        final Intent intent = getIntent();
+        /*final Intent intent = getIntent();
         if(intent == null) {
             Log.d("MainActivity", "nulltext");
         }
         String scaleInfo = intent.getStringExtra("scaleInfo");
-        String scaleInfotwo = intent.getStringExtra("scaleInfotwo");
+        String scaleInfotwo = intent.getStringExtra("scaleInfotwo");*/
+
+        //intent로 받으면 다시 측정했을 때 scaleinfo랑 scaleinfotwo값을 못불러와서 SP로 함
+        SharedPreferences sharedpreferences = getSharedPreferences("Pref", MODE_PRIVATE);
+        final String scaleInfo = sharedpreferences.getString("scaleInfo","null");
+        final String scaleInfotwo = sharedpreferences.getString("scaleInfotwo","null");
 
         TextView egOctave_min = findViewById(R.id.egOctave_min);
         TextView egOctave_max = findViewById(R.id.egOctave_max);
@@ -134,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
         handler = new Handler();
         bundle = new Bundle();
         f = new Fragment();
-        String mOctave = "3\' 시";
+        String mOctave = scaleInfo;
 
         JSONObject jsonParam = new JSONObject();
         try {
@@ -224,7 +249,7 @@ public class MainActivity extends AppCompatActivity {
         public android.support.v4.app.Fragment getItem(int position) {
             switch(position){
                 case 0:{
-                    return HomeFragment.newInstance(position, list, dance_list, ballad_list, hiphop_list, rock_list);
+                    return HomeFragment.newInstance(position, rnb_list, dance_list, ballad_list, hiphop_list, rock_list);
                 }
                 case 1:{
                     return MyPickFragment.newInstance(position);

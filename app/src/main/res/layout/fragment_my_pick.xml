@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
     android:background="#585858"
     tools:context="com.yapp.picksari.MyPickFragment">
 
@@ -98,13 +99,68 @@
 
 
     </LinearLayout>
-
-    <ListView
-        android:id="@+id/lv_pick_music"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
+        android:layout_height="match_parent"
         android:layout_below="@id/layout_two"
-        android:descendantFocusability="blocksDescendants"/>
+        android:layout_marginBottom="30dp"
+        android:nestedScrollingEnabled="true">
+            <ListView
+            android:id="@+id/lv_pick_music"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:descendantFocusability="blocksDescendants"
+            android:scrollbarAlwaysDrawVerticalTrack="true"
+            android:nestedScrollingEnabled="true"/>
 
+        <com.github.clans.fab.FloatingActionMenu
+            android:id="@+id/menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center_vertical"
+            android:padding="10dp"
+            fab:menu_animationDelayPerItem="55"
+            fab:menu_backgroundColor="@android:color/transparent"
+            fab:menu_buttonSpacing="0dp"
+            fab:menu_colorNormal="#ffe100"
+            fab:menu_colorPressed="#7b7b7b"
+            fab:menu_colorRipple="#99d4d4d4"
+            fab:menu_fab_size="normal"
+            fab:menu_icon="@drawable/fab_add"
+            fab:menu_labels_style="@drawable/label"
+            fab:menu_labels_colorNormal="@android:color/transparent"
+            fab:menu_labels_cornerRadius="3dp"
+            fab:menu_labels_ellipsize="none"
+            fab:menu_labels_hideAnimation="@anim/fab_slide_out_to_right"
+            fab:menu_labels_margin="0dp"
+            fab:menu_labels_maxLines="-1"
+            fab:menu_labels_paddingRight="30dp"
+            fab:menu_labels_position="left"
+            fab:menu_labels_showAnimation="@anim/fab_slide_in_from_right"
+            fab:menu_labels_singleLine="false"
+            fab:menu_labels_textColor="@android:color/white"
+            fab:menu_labels_textSize="15sp"
+            fab:menu_openDirection="up"
+            fab:menu_shadowColor="#66787878"
+            fab:menu_showShadow="true">
+
+            <com.github.clans.fab.FloatingActionButton
+                android:id="@+id/menu_item"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_floating_retry"
+                fab:fab_colorNormal="#ffffff"
+                fab:fab_label="음역대 다시 측정하기"
+                fab:fab_size="mini" />
+
+            <com.github.clans.fab.FloatingActionButton
+                android:id="@+id/menu_item2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_floating_db"
+                fab:fab_colorNormal="#ffffff"
+                fab:fab_label="DB에 음악 추가"
+                fab:fab_size="mini" />
+        </com.github.clans.fab.FloatingActionMenu>
+    </FrameLayout>
 </RelativeLayout>

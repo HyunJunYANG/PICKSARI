@@ -119,7 +119,7 @@ public class ListViewAdapter extends ArrayAdapter<musicItem>{
                     musicdb.insert(musichelper.TABLE_NAME, null, row);
                     MyPickFragment.myAdapter.notifyDataSetChanged();
 
-                    HomeFragment.get_reset();
+                    //HomeFragment.get_reset();
                     MyPickFragment.get_reset();
 
                     music.mPick = 1;
@@ -131,14 +131,14 @@ public class ListViewAdapter extends ArrayAdapter<musicItem>{
                     musicdb.execSQL("DELETE FROM " + musichelper.TABLE_NAME + " WHERE mName = '" + music.mName + "' AND mSinger = '" + music.mSinger + "';");
                     MyPickFragment.myAdapter.notifyDataSetChanged();
 
-                    HomeFragment.get_reset();
+                    //HomeFragment.get_reset();
                     MyPickFragment.get_reset();
 
                     music.mPick = 0;
                 }
+                notifyDataSetChanged();
             }
         });
-
 
         return view;
     }
