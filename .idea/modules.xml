@@ -2,11 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://C:\android\PICKSARI.iml" filepath="C:\android\PICKSARI.iml" />
+      <module fileurl="file://$PROJECT_DIR$/PICKSARI.iml" filepath="$PROJECT_DIR$/PICKSARI.iml" />
       <module fileurl="file://$PROJECT_DIR$/TarsosDSP-Android-latest/TarsosDSP-Android-latest.iml" filepath="$PROJECT_DIR$/TarsosDSP-Android-latest/TarsosDSP-Android-latest.iml" />
-      <module fileurl="file://$PROJECT_DIR$/android.iml" filepath="$PROJECT_DIR$/android.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://C:\android\dain.iml" filepath="C:\android\dain.iml" />
     </modules>
   </component>
 </project>

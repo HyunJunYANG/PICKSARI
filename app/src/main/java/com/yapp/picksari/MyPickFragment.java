@@ -71,7 +71,7 @@ public class MyPickFragment extends Fragment {
     Button hiphop;
     Button rock;
 
-    static String flag = "알앤비";
+    static String flag = "R&B";
     ImageButton btnPick;
 
     public static AlertDialog.Builder builder;
