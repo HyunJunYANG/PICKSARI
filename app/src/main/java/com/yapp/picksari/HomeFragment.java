@@ -241,7 +241,8 @@ public class HomeFragment extends Fragment {
         });
 
         ListView listView = (ListView) view.findViewById(R.id.lv_music);
-        listView.setAdapter(new ListViewAdapter(getActivity(), android.R.layout.activity_list_item, rnb_list));
+        myAdapter = new ListViewAdapter(getActivity(), android.R.layout.activity_list_item, rnb_list);
+        listView.setAdapter(myAdapter);
 
         return view;
     }
