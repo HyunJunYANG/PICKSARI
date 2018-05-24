@@ -220,7 +220,7 @@ public class MyPickFragment extends Fragment {
 
             @Override
             public void onClick(View view) {
-                flag = "알앤비";
+                flag = "R&B";
                 dance.setBackgroundResource(R.drawable.my_genre_not_btn);
                 ballad.setBackgroundResource(R.drawable.my_genre_not_btn);
                 rnb.setBackgroundResource(R.drawable.my_genre_btn);
