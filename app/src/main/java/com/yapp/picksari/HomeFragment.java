@@ -148,7 +148,6 @@ public class HomeFragment extends Fragment {
         dance = (Button) view.findViewById(R.id.btn_dance);
         ballad = (Button) view.findViewById(R.id.btn_ballad);
         rnb = (Button) view.findViewById(R.id.btn_rnb);
-        dance = (Button) view.findViewById(R.id.btn_dance);
         hiphop = (Button) view.findViewById(R.id.btn_hiphop);
         rock = (Button) view.findViewById(R.id.btn_rock);
 

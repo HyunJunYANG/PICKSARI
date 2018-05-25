@@ -5,10 +5,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.yapp.picksari.MusicInesertActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="#585858">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+        <!--<Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/tv"
+            android:layout_alignParentStart="true"
+            android:background="@android:color/transparent"
+            android:text="홈"
+            android:textColor="#545454"
+            android:textSize="14sp"
+            android:textAlignment="viewStart"
+            android:paddingLeft="20dp"/>-->
+
         <TextView
             android:id="@+id/tv"
             android:layout_width="match_parent"
@@ -22,6 +35,7 @@
             android:textStyle="bold" />
 
         <Button
+            android:id="@+id/bt_send"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/tv"
@@ -39,7 +53,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@drawable/ic_background_wide"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp">
         <TextView
@@ -63,6 +76,7 @@
                 android:textStyle="bold"
                 android:layout_marginRight="19dp"/>
             <EditText
+                android:id="@+id/et_song"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="제목"
@@ -73,7 +87,11 @@
                 android:paddingTop="4dp"
                 android:paddingBottom="4dp"
                 android:paddingLeft="16dp"
-                android:textColor="#cecece"/>
+                android:textColor="#cecece"
+                android:shadowDy="2"
+                android:shadowColor="#4D4D4D"
+                android:shadowDx="2"
+                android:shadowRadius="1.5"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -89,6 +107,7 @@
                 android:textStyle="bold"
                 android:layout_marginRight="19dp"/>
             <EditText
+                android:id="@+id/et_singer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="가수"
@@ -102,27 +121,68 @@
                 android:textColor="#cecece"/>
         </LinearLayout>
         <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="최고음"
+        android:textColor="#dedede"
+        android:textStyle="bold"/>
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:orientation="horizontal"
+           android:layout_marginBottom="11dp"
+           android:layout_marginTop="11dp">
+           <Spinner
+               android:id="@+id/spinner1"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:background="@drawable/et_round_shape"
+               android:paddingLeft="20dp"
+               android:paddingRight="20dp"
+               android:paddingTop="1dp"
+               android:paddingBottom="1dp"
+               android:backgroundTint="#717171">
+           </Spinner>
+           <TextView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="옥타브"
+               android:layout_marginLeft="10dp"
+               android:layout_marginRight="10dp"
+               android:textColor="#cecece"/>
+           <Spinner
+               android:id="@+id/spinner2"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:background="@drawable/et_round_shape"
+               android:paddingLeft="20dp"
+               android:paddingRight="20dp"
+               android:backgroundTint="#717171"
+               android:paddingTop="1dp"
+               android:paddingBottom="1dp"></Spinner>
+       </LinearLayout>
+        <!--<SeekBar
+            android:id="@+id/seekbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="최고음"
-            android:textColor="#ababab"
-            android:textStyle="bold"/>
-        <SeekBar
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="7dp"
-            android:layout_marginBottom="15dp"/>
+            android:layout_marginTop="11dp"
+            android:layout_marginBottom="25dp"
+            android:thumb="@drawable/seekbar_thumb"
+            android:progressTint="#B0B0B0" />-->
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="장르"
-            android:textColor="#ababab"
+            android:textColor="#dedede"
             android:textStyle="bold"
             android:layout_marginBottom="11dp"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+
             <Button
                 android:id="@+id/btn_rnb"
                 android:layout_width="55dp"

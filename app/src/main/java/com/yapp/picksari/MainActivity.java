@@ -183,7 +183,7 @@ public class MainActivity extends AppCompatActivity {
                         bundle.putParcelableArrayList("rnblist", (ArrayList<? extends Parcelable>) rnb_list);
                         bundle.putParcelableArrayList("dancelist", (ArrayList<? extends Parcelable>) dance_list);
                         bundle.putParcelableArrayList("balladlist", (ArrayList<? extends Parcelable>) ballad_list);
-                        bundle.putParcelableArrayList("hiphop", (ArrayList<? extends Parcelable>) hiphop_list);
+                        bundle.putParcelableArrayList("hiphoplist", (ArrayList<? extends Parcelable>) hiphop_list);
                         bundle.putParcelableArrayList("rocklist", (ArrayList<? extends Parcelable>) rock_list);
                         pager.setAdapter(new MyAdapter(getSupportFragmentManager()));
                         f.setArguments(bundle);
@@ -192,8 +192,6 @@ public class MainActivity extends AppCompatActivity {
                 });
             }
         }.start();
-
-
     }
 
     void JSONParser(String[] SP) {
