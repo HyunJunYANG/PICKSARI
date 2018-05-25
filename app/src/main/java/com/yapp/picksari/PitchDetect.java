@@ -38,7 +38,7 @@ public class PitchDetect extends AppCompatActivity {
             "2\' 도","2\' 레","2\' 미","2\' 파","2\' 솔","2\' 라","2\' 시",
             "3\' 도","3\' 레","3\' 미","3\' 파","3\' 솔","3\' 라","3\' 시",
             "4\' 도","4\' 레","4\' 미","4\' 파","4\' 솔","4\' 라","4\' 시",""};
-    final float[] hz = {1f, 1f, 65.41f, 73.42f, 82.41f, 87.31f, 98.00f, 110.00f, 123.47f,
+    final float[] hz = {20f, 1f, 65.41f, 73.42f, 82.41f, 87.31f, 98.00f, 110.00f, 123.47f,
             130.81f, 146.83f, 164.81f, 174.61f, 196f, 220f, 246.94f,
             261.63f, 293.66f, 329.63f, 349.23f, 392f, 440f, 493.88f,
             523.25f, 587.33f, 659.25f, 698.46f, 783.99f, 880f, 987.77f,
@@ -197,11 +197,17 @@ public class PitchDetect extends AppCompatActivity {
                                 nextChanceHandler.postDelayed(new Runnable() {
                                     @Override
                                     public void run() {
-                                        pitchDetectFlag = 0;
+                                        Handler flagHandler = new Handler();
                                         topLayout.setVisibility(View.VISIBLE);
                                         waitLayout.setVisibility(View.GONE);
                                         manPicture.setImageResource(R.drawable.man_2);
-                                        //soundPool.play(soundId,1.0F, 1.0F,  1,  0,  1.0F);
+                                        soundPool.play(soundId,1.0F, 1.0F,  1,  0,  1.0F);
+                                        flagHandler.postDelayed(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                pitchDetectFlag = 0;
+                                            }
+                                        },1500);
                                         pitchText.setTextColor(Color.parseColor("#ffe000"));
                                     }
                                 },1000);
@@ -266,11 +272,17 @@ public class PitchDetect extends AppCompatActivity {
                                 nextChanceHandler.postDelayed(new Runnable() {
                                     @Override
                                     public void run() {
-                                        pitchDetectFlag = 0;
+                                        Handler flagHandler = new Handler();
                                         topLayout.setVisibility(View.VISIBLE);
                                         waitLayout.setVisibility(View.GONE);
                                         manPicture.setImageResource(R.drawable.man_2);
-                                        //soundPool.play(soundId,1.0F, 1.0F,  1,  0,  1.0F);
+                                        soundPool.play(soundId,1.0F, 1.0F,  1,  0,  1.0F);
+                                        flagHandler.postDelayed(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                pitchDetectFlag = 0;
+                                            }
+                                        },1500);
                                         pitchText.setTextColor(Color.parseColor("#ffe000"));
                                     }
                                 },1000);
@@ -444,7 +456,7 @@ public class PitchDetect extends AppCompatActivity {
                             }
                         } else if (failFlag < 2) {
                             if (!thread.isInterrupted()) {
-                                if (pitchInHz > hz[hzIndex-1] && pitchInHz < hz[hzIndex]) {
+                                if (pitchInHz > hz[0] && pitchInHz < hz[hzIndex]) {
                                     Log.d(LOG_TAG, String.valueOf(hz[hzIndex]));
                                     pitch = pitchInHz;
 
