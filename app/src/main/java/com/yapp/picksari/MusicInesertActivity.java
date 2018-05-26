@@ -189,8 +189,8 @@ public class MusicInesertActivity extends AppCompatActivity{
                         }
                     }.start();
                     Toast.makeText(getApplicationContext(), "노래 정보가 저장되었습니다.", Toast.LENGTH_SHORT).show();
-                    HomeFragment.myAdapter.notifyDataSetChanged();
                     finish();
+                    HomeFragment.myAdapter.notifyDataSetChanged();
                     startActivity(intent);
                 }
             }
