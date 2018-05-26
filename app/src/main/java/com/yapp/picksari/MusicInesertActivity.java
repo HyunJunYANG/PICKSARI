@@ -1,6 +1,8 @@
 package com.yapp.picksari;
 
+import android.content.Intent;
 import android.os.Parcelable;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -54,11 +56,12 @@ public class MusicInesertActivity extends AppCompatActivity{
         spinner1 = (Spinner)findViewById(R.id.spinner1);
         spinner2 = (Spinner)findViewById(R.id.spinner2);
 
+        final Intent intent = new Intent(this, MainActivity.class);
+
         //최고음 spinner
         final ArrayAdapter<Integer> integerArrayAdapter = new ArrayAdapter<Integer>(this, android.R.layout.simple_spinner_item, sp1);
         integerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner1.setAdapter(integerArrayAdapter);
-        spinner1.setDropDownWidth(100);
         final ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, sp2);
         stringArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner2.setAdapter(stringArrayAdapter);
@@ -162,27 +165,33 @@ public class MusicInesertActivity extends AppCompatActivity{
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String octave_all = octave+"\' "+octave2;
-                JSONObject jsonParam = new JSONObject();
-                try {
-                    jsonParam.put("mName",et_song.getText().toString());
-                    jsonParam.put("mSinger",et_singer.getText().toString());
-                    jsonParam.put("mOctave",octave_all);
-                    jsonParam.put("mGenre",genre);
-                    jsonParam.put("mPick",0);
-                } catch (JSONException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
+                if(et_singer.getText().toString().length()==0 || et_song.getText().toString().length()==0){
+                    Toast.makeText(getApplicationContext(), "노래 정보가 입력되지 않았습니다.",Toast.LENGTH_SHORT).show();
                 }
-                sp = new SendPost(jsonParam,"/register_music");
-                new Thread() {
-                    public void run() {
-                        sp.executeClient();
+                else {
+                    String octave_all = octave + "\' " + octave2;
+                    JSONObject jsonParam = new JSONObject();
+                    try {
+                        jsonParam.put("mName", et_song.getText().toString());
+                        jsonParam.put("mSinger", et_singer.getText().toString());
+                        jsonParam.put("mOctave", octave_all);
+                        jsonParam.put("mGenre", genre);
+                        jsonParam.put("mPick", 0);
+                    } catch (JSONException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
                     }
-                }.start();
-                Toast.makeText(getApplicationContext(), "노래 정보가 저장되었습니다.",Toast.LENGTH_SHORT).show();
-                //HomeFragment.get_reset();
-                finish();
+                    sp = new SendPost(jsonParam, "/register_music");
+                    new Thread() {
+                        public void run() {
+                            sp.executeClient();
+                        }
+                    }.start();
+                    Toast.makeText(getApplicationContext(), "노래 정보가 저장되었습니다.", Toast.LENGTH_SHORT).show();
+                    HomeFragment.myAdapter.notifyDataSetChanged();
+                    startActivity(intent);
+                    finish();
+                }
             }
         });
     }

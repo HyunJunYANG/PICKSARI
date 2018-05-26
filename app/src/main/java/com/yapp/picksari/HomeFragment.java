@@ -124,6 +124,7 @@ public class HomeFragment extends Fragment {
 
         final View view = inflater.inflate(R.layout.fragment_home, container, false);
 
+
         FloatingActionMenu menu = (FloatingActionMenu)view.findViewById(R.id.menu);
         FloatingActionButton menu1 = (FloatingActionButton)view.findViewById(R.id.menu_item) ;
         FloatingActionButton menu2 = (FloatingActionButton)view.findViewById(R.id.menu_item2);
