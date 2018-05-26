@@ -14,7 +14,7 @@
 
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="3.7"
+        android:layout_weight="3.2"
         android:background="#ffffffff">
 
         <ImageView
@@ -180,9 +180,10 @@
         app:layout_constraintTop_toBottomOf="@+id/tabs"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="7"
+        android:layout_weight="6.8"
         android:nestedScrollingEnabled="true"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="#ffffffff">
 
         <android.support.v4.view.ViewPager
             android:id="@+id/pager"
