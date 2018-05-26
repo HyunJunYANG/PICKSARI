@@ -36,6 +36,8 @@ public class IntroActivity extends AppCompatActivity {
                 intent.putExtra("scaleInfotwo", scaleInfotwo.toString());
 
                 startActivity(intent);
+                finish();
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out); //애니메이션처리
             }
         }
     };
