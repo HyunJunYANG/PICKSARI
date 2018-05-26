@@ -117,7 +117,7 @@
             android:id="@+id/menu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="right|center_vertical"
+            android:layout_gravity="right|bottom"
             android:padding="10dp"
             fab:menu_animationDelayPerItem="55"
             fab:menu_backgroundColor="@android:color/transparent"
