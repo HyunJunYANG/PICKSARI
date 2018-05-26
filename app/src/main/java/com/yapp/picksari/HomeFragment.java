@@ -135,6 +135,7 @@ public class HomeFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(),PitchDetectStart.class);
                 startActivity(intent);
+                getActivity().finish();
             }
         });
 

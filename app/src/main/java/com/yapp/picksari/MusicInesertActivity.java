@@ -1,5 +1,6 @@
 package com.yapp.picksari;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
@@ -189,8 +190,8 @@ public class MusicInesertActivity extends AppCompatActivity{
                     }.start();
                     Toast.makeText(getApplicationContext(), "노래 정보가 저장되었습니다.", Toast.LENGTH_SHORT).show();
                     HomeFragment.myAdapter.notifyDataSetChanged();
-                    startActivity(intent);
                     finish();
+                    startActivity(intent);
                 }
             }
         });
