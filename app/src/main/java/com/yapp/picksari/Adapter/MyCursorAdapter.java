@@ -1,6 +1,7 @@
 package com.yapp.picksari.Adapter;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -94,9 +95,12 @@ public class MyCursorAdapter extends CursorAdapter {
                 Cursor cursor2 = musicdb.rawQuery("SELECT mPick FROM " + musichelper.TABLE_NAME + " WHERE _id = "+ realId +";", null);
 
                 while (cursor2.moveToNext()) {
-                    List<musicItem> items = ListViewAdapter.items;
-                    final musicItem music = items.get(cursor2.getInt(0));
-                    music.mPick = 0; // 0으로 바꿔주면 홈에서 하트 색 바뀜
+                    try {
+                        List<musicItem> items = ListViewAdapter.items;
+                        final musicItem music = items.get(cursor2.getInt(0));
+                        music.mPick = 0; // 0으로 바꿔주면 홈에서 하트 색 바뀜
+                    } catch (Exception e) {
+                    }
 
                 }
 

@@ -1,5 +1,6 @@
 package com.yapp.picksari;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -58,6 +59,8 @@ public class MyPickFragment extends Fragment {
     static Cursor pickcursor;
     static MyCursorAdapter pickadapter;
     ListView lvMusicpick;
+
+    Activity act;
 
 
     // 새로
@@ -123,6 +126,8 @@ public class MyPickFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
+        act = getActivity();
 
         final View view = inflater.inflate(R.layout.fragment_my_pick, container, false);
 
