@@ -6,32 +6,61 @@
     android:layout_height="match_parent"
     tools:context="com.yapp.picksari.PitchResult">
 
-    <ImageView
-        android:id="@+id/resultBox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/box"
-        android:layout_marginTop="10dp"
-        android:layout_centerHorizontal="true"/>
-
-    <TextView
-        android:id="@+id/mainText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="당신의 음역대는 XX ~ YY \n 돌고래와 대화가 가능하겠어"
-        android:textColor="#de000000"
-        android:lineSpacingExtra="5sp"
-        android:textSize="15sp"
-        android:gravity="center"
-        android:layout_marginTop="15dp"
-        android:layout_alignTop="@id/resultBox"
-        android:layout_centerHorizontal="true"/>
-
-    <ImageView
-        android:id="@+id/resultImage"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_gravity="bottom" />
+        android:orientation="vertical"
+        android:onClick="mOnClick">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2">
+            <ImageView
+                android:id="@+id/resultBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/box"
+                android:layout_marginTop="10dp"
+                android:layout_centerHorizontal="true"/>
+
+            <TextView
+                android:id="@+id/mainText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="당신의 음역대는 XX ~ YY \n 돌고래와 대화가 가능하겠어"
+                android:textColor="#de000000"
+                android:lineSpacingExtra="5sp"
+                android:textSize="15sp"
+                android:gravity="center"
+                android:layout_marginTop="15dp"
+                android:layout_alignTop="@id/resultBox"
+                android:layout_centerHorizontal="true"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="8">
+            <ImageView
+                android:id="@+id/resultImage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentBottom="true"
+                android:src="@drawable/cow_image"
+                android:scaleType="fitXY"
+                android:layout_gravity="bottom" />
+
+            <ImageView
+                android:id="@+id/share"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_share_black_24dp"
+                android:layout_alignBottom="@id/resultImage"
+                android:layout_alignParentRight="true"
+                android:layout_margin="20dp"/>
+        </RelativeLayout>
+
+    </LinearLayout>
 
 </RelativeLayout>

@@ -19,6 +19,8 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
 import com.yapp.picksari.Adapter.MyCursorAdapter;
 import com.yapp.picksari.DBHelper.DBhelper;
 import com.yapp.picksari.Music.Music_list;
@@ -69,7 +71,7 @@ public class MyPickFragment extends Fragment {
     Button hiphop;
     Button rock;
 
-    static String flag = "알앤비";
+    static String flag = "R&B";
     ImageButton btnPick;
 
     public static AlertDialog.Builder builder;
@@ -123,6 +125,28 @@ public class MyPickFragment extends Fragment {
         // Inflate the layout for this fragment
 
         final View view = inflater.inflate(R.layout.fragment_my_pick, container, false);
+
+        //플로팅액션버튼
+        FloatingActionMenu menu = (FloatingActionMenu)view.findViewById(R.id.menu);
+        FloatingActionButton menu1 = (FloatingActionButton)view.findViewById(R.id.menu_item) ;
+        FloatingActionButton menu2 = (FloatingActionButton)view.findViewById(R.id.menu_item2);
+        menu.bringToFront();
+
+        menu1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(),PitchDetectStart.class);
+                startActivity(intent);
+            }
+        });
+
+        menu2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(),MusicInesertActivity.class);
+                startActivity(intent);
+            }
+        });
 
         dance = (Button) view.findViewById(R.id.btn_dance_pick);
         ballad = (Button) view.findViewById(R.id.btn_ballad_pick);
@@ -196,7 +220,7 @@ public class MyPickFragment extends Fragment {
 
             @Override
             public void onClick(View view) {
-                flag = "알앤비";
+                flag = "R&B";
                 dance.setBackgroundResource(R.drawable.my_genre_not_btn);
                 ballad.setBackgroundResource(R.drawable.my_genre_not_btn);
                 rnb.setBackgroundResource(R.drawable.my_genre_btn);
@@ -205,8 +229,6 @@ public class MyPickFragment extends Fragment {
                 onResume();
             }
         });
-
-
 
         return view;
     }
