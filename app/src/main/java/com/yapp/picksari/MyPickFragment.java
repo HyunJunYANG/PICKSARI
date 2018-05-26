@@ -127,7 +127,9 @@ public class MyPickFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        act = getActivity();
+
+
+
 
         final View view = inflater.inflate(R.layout.fragment_my_pick, container, false);
 

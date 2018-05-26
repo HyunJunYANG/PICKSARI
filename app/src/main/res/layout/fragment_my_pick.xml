@@ -111,7 +111,8 @@
             android:layout_height="match_parent"
             android:descendantFocusability="blocksDescendants"
             android:scrollbarAlwaysDrawVerticalTrack="true"
-            android:nestedScrollingEnabled="true"/>
+            android:nestedScrollingEnabled="true"
+                />
 
         <com.github.clans.fab.FloatingActionMenu
             android:id="@+id/menu"
