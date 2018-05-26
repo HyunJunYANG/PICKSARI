@@ -13,16 +13,30 @@ public class IntroActivity extends AppCompatActivity {
     private Handler handler;
     static String LOG_TAG="IntroActivity";
     private SharedPreferences sharedpreferences;
+    boolean isFirst;
+
 
 
     //postDealyed로 실행되는 쓰레드, PitchDetectStart 액티비티로 넘어간다
     Runnable runnable = new Runnable() {
         @Override
         public void run() {
-            Intent intent = new Intent(IntroActivity.this, PitchDetectStart.class);
-            startActivity(intent);
-            finish();
-            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out); //애니메이션처리
+            if (isFirst) {
+                Intent intent = new Intent(IntroActivity.this, PitchDetectStart.class);
+                startActivity(intent);
+                finish();
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out); //애니메이션처리
+            }
+            else {
+                String scaleInfo = sharedpreferences.getString("scaleInfo", "Fail");
+                String scaleInfotwo = sharedpreferences.getString("scaleInfotwo", "Fail");
+
+                Intent intent = new Intent(IntroActivity.this, MainActivity.class);
+                intent.putExtra("scaleInfo", scaleInfo.toString());
+                intent.putExtra("scaleInfotwo", scaleInfotwo.toString());
+
+                startActivity(intent);
+            }
         }
     };
 
@@ -31,23 +45,14 @@ public class IntroActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         sharedpreferences = getSharedPreferences("Pref", MODE_PRIVATE);
-        boolean isFirst = sharedpreferences.getBoolean("isFirst", true);
-        if (isFirst) {
-            setContentView(R.layout.activity_intro);
+        isFirst = sharedpreferences.getBoolean("isFirst", true);
 
-            handler = new Handler();
-            handler.postDelayed(runnable, 1000); //1초 지연
-        }
-        else {
-            String scaleInfo = sharedpreferences.getString("scaleInfo", "Fail");
-            String scaleInfotwo = sharedpreferences.getString("scaleInfotwo", "Fail");
+        setContentView(R.layout.activity_intro);
 
-            Intent intent = new Intent(IntroActivity.this, MainActivity.class);
-            intent.putExtra("scaleInfo", scaleInfo.toString());
-            intent.putExtra("scaleInfotwo", scaleInfotwo.toString());
+        handler = new Handler();
 
-            startActivity(intent);
-        }
+        handler.postDelayed(runnable, 1000); //1초 지연
+
 
     }
 
