@@ -141,7 +141,8 @@
             fab:menu_labels_textSize="15sp"
             fab:menu_openDirection="up"
             fab:menu_shadowColor="#66787878"
-            fab:menu_showShadow="true">
+            fab:menu_showShadow="true"
+            android:layout_marginRight="20dp">
 
             <com.github.clans.fab.FloatingActionButton
                 android:id="@+id/menu_item"
