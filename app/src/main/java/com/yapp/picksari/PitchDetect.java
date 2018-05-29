@@ -38,7 +38,7 @@ public class PitchDetect extends AppCompatActivity {
             "2\' 도","2\' 레","2\' 미","2\' 파","2\' 솔","2\' 라","2\' 시",
             "3\' 도","3\' 레","3\' 미","3\' 파","3\' 솔","3\' 라","3\' 시",
             "4\' 도","4\' 레","4\' 미","4\' 파","4\' 솔","4\' 라","4\' 시",""};
-    final float[] hz = {50f, 65.41f, 65.41f, 73.42f, 82.41f, 87.31f, 98.00f, 110.00f, 123.47f,
+    final float[] hz = {30f, 65.41f, 65.41f, 73.42f, 82.41f, 87.31f, 98.00f, 110.00f, 123.47f,
             130.81f, 146.83f, 164.81f, 174.61f, 196f, 220f, 246.94f,
             261.63f, 293.66f, 329.63f, 349.23f, 392f, 440f, 493.88f,
             523.25f, 587.33f, 659.25f, 698.46f, 783.99f, 880f, 987.77f,
@@ -81,7 +81,7 @@ public class PitchDetect extends AppCompatActivity {
             R.raw.piano_040, R.raw.piano_042, R.raw.piano_044, R.raw.piano_045, R.raw.piano_047, R.raw.piano_049, R.raw.piano_051,
             R.raw.piano_052, R.raw.piano_054, R.raw.piano_056, R.raw.piano_057, R.raw.piano_059, R.raw.piano_061, R.raw.piano_063,
             R.raw.piano_064, R.raw.piano_064, R.raw.piano_064, R.raw.piano_064, R.raw.piano_064, R.raw.piano_064, R.raw.piano_064, R.raw.piano_064};
-    int soundIndex = 11;
+    int soundIndex = lowPitchStart;
 
     ProgressBar progressBar;
 
