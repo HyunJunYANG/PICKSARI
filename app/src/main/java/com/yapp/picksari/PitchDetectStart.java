@@ -35,6 +35,17 @@ public class PitchDetectStart extends AppCompatActivity {
             }
         });
 
+        TextView permission = findViewById(R.id.permission);
+
+        permission.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Uri uri = Uri.parse("https://blog.naver.com/yhj780/221286399335");
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
+            }
+        });
+
         //터치리스너, 누르면 색이 변하고 떼면 넘어감
         startImage.setOnTouchListener(new View.OnTouchListener() {
             @Override

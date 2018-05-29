@@ -39,5 +39,12 @@
         android:textColor="#696969"
         android:layout_above="@id/gpl"
         android:layout_centerHorizontal="true"/>
+    <TextView
+        android:id="@+id/permission"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="사용 권한과 사유 LINK"
+        android:layout_above="@id/library"
+        android:layout_centerHorizontal="true"/>
 
 </RelativeLayout>
